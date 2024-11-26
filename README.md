@@ -68,7 +68,13 @@ Lien vers la documentation : [ici](https://www.sqlite.org/docs.html)
 
 ### Seeding
 Se déplacer dans [src/database](src/database/seed)
-`python database.py seed`
+```
+# Pour créer la db
+python database.py seed
+
+# Pour ajouter des données d'exemple
+python database.py example_data
+```
 
 ### Mise à jour du schéma SQL
 Modifier [src/database/seed/seed.sql](src/database/seed/seed.sql)
