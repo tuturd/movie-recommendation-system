@@ -7,3 +7,5 @@ src/c_extension/build/
 src/c_extension/lib/
 
 .venv/
+
+*.db
