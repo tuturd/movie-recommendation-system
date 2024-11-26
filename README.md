@@ -67,7 +67,7 @@ Utilisation du module `sqlite3` installée par défaut sur Python.
 Lien vers la documentation : [ici](https://www.sqlite.org/docs.html)
 
 ### Seeding
-Se déplacer dans [src/database](src/database/seed)
+Se déplacer dans [src/database](src/database)
 ```
 # Pour créer la db
 python database.py seed
