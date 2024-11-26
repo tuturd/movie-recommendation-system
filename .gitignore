@@ -9,3 +9,4 @@ src/c_extension/lib/
 .venv/
 
 *.db
+*.env

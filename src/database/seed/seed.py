@@ -1,5 +1,5 @@
 import sqlite3
-from config import DB_PATH, SQL_SEED_PATH
+from src.env.config import DB_PATH, SEED_PATH
 
 
 def seed_database():
@@ -8,7 +8,7 @@ def seed_database():
     cursor = conn.cursor()
 
     # Read the SQL seed file
-    with open(SQL_SEED_PATH, 'r') as file:
+    with open(SEED_PATH, 'r') as file:
         sql_script = file.read()
 
     # Execute the SQL script
