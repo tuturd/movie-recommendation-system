@@ -1,0 +1,13 @@
+{
+    "extensions": [
+        {
+            "extension_name": "double",
+            "sources_name": "double_extension"
+        }
+    ],
+    "lib_dir": "lib/",
+    "dirs_to_delete": [
+        "build/",
+        "lib/"
+    ]
+}
