@@ -67,8 +67,8 @@ Utilisation du module `sqlite3` installée par défaut sur Python.
 Lien vers la documentation : [ici](https://www.sqlite.org/docs.html)
 
 ### Seeding
-Se déplacer dans [src/database/seed](src/database/seed)
-`python seed.py`
+Se déplacer dans [src/database](src/database/seed)
+`python database.py seed`
 
 ### Mise à jour du schéma SQL
 Modifier [src/database/seed/seed.sql](src/database/seed/seed.sql)

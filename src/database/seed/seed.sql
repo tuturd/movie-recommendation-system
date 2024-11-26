@@ -1,25 +1,26 @@
 CREATE TABLE IF NOT EXISTS user (
-    id SERIAL PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL,
-    date_of_birth TIMESTAMP NOT NULL
+    id INTEGER PRIMARY KEY,
+    username VARCHAR(50) NOT NULL,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL,
+    birthDate TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS genre (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     name VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS director (
-    id SERIAL PRIMARY KEY,
-    first_name VARCHAR(50) NOT NULL,
-    last_name VARCHAR(50) NOT NULL
+    id INTEGER PRIMARY KEY,
+    firstname VARCHAR(50) NOT NULL,
+    lastname VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS movie (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
-    release_date TIMESTAMP NOT NULL,
+    releaseDate TIMESTAMP NOT NULL,
     genreId INT NOT NULL,
     directorId INT NOT NULL,
     price INT NOT NULL,
@@ -28,7 +29,7 @@ CREATE TABLE IF NOT EXISTS movie (
 );
 
 CREATE TABLE IF NOT EXISTS userMovie (
-    id SERIAL PRIMARY KEY,
+    id INTEGER PRIMARY KEY,
     userId INT NOT NULL,
     movieId INT NOT NULL,
     rating INT NOT NULL,
