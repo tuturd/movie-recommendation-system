@@ -46,7 +46,17 @@ Activer l'environnement virtuel
 - Sur Windows : `.venv\Scripts\activate`
 
 Installer les librairies nécessaires
-`pip install -r requirements.txt`
+```
+# Pour les modules Python
+pip install -r requirements.txt
+
+# Installation de Tkinter sous Linux
+sudo apt install python3-tk
+
+# Installation de Tkinter sous Windows
+pip install tk
+
+```
 
 <hr>
 
@@ -65,6 +75,9 @@ Pour mettre à jour le fichier [requirements.txt](requirements.txt)
 ### SQLite3
 Utilisation du module `sqlite3` installée par défaut sur Python.
 Lien vers la documentation : [ici](https://www.sqlite.org/docs.html)
+
+Installation pour C
+- Sur Linux : `sudo apt-get install libsqlite3-dev`
 
 ### Seeding
 Se déplacer dans [src/database](src/database)
