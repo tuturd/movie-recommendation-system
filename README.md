@@ -42,9 +42,9 @@ Configurer ensuite l'environnement virtuel Python
 `python -m venv .venv`
 
 Activer l'environnement virtuel
-- Sur Linux : `source .venv/bin/activate`
+- Sur Linux/Mac : `source .venv/bin/activate`
 - Sur Windows : `.venv\Scripts\activate`
-
+s
 Installer les librairies nécessaires
 ```
 # Pour les modules Python
