@@ -10,3 +10,4 @@ src/c_extension/lib/
 
 *.db
 *.env
+*.DS_Store
