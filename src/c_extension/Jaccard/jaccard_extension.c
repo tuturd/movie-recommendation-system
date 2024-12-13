@@ -2,20 +2,26 @@
 #include <sqlite3.h>
 #include <stdlib.h>
 
-// Fonction pour calculer la similarité de Jaccard
+// Structure pour stocker les résultats de similarité
+typedef struct {
+    int user_id;      // ID de l'autre utilisateur
+    float similarite; // Résultat de la similarité de Jaccard
+} ResultatSimilarite;
+
+// Fonction pour calculer la similarité de Jaccard entre deux utilisateurs
 float calculer_jaccard(sqlite3 *db, int user1_id, int user2_id) {
     sqlite3_stmt *stmt;
     int intersection = 0;
     int union_taille = 0;
 
     // Requête pour calculer l'intersection
-    const char *query_intersection = 
+    const char *query_intersection =
         "SELECT COUNT(*) "
         "FROM user_movies AS um1 "
         "JOIN user_movies AS um2 "
         "ON um1.movie_id = um2.movie_id "
         "WHERE um1.user_id = ? AND um2.user_id = ?;";
-    
+
     // Préparation et exécution de la requête pour l'intersection
     sqlite3_prepare_v2(db, query_intersection, -1, &stmt, NULL);
     sqlite3_bind_int(stmt, 1, user1_id);
@@ -26,11 +32,8 @@ float calculer_jaccard(sqlite3 *db, int user1_id, int user2_id) {
     }
     sqlite3_finalize(stmt);
 
-    // Impression des résultats de l'intersection
-    printf("Résultat de l'intersection : %d\n", intersection);
-
     // Requête pour calculer l'union
-    const char *query_union = 
+    const char *query_union =
         "SELECT COUNT(DISTINCT movie_id) "
         "FROM user_movies "
         "WHERE user_id = ? OR user_id = ?;";
@@ -45,14 +48,45 @@ float calculer_jaccard(sqlite3 *db, int user1_id, int user2_id) {
     }
     sqlite3_finalize(stmt);
 
-    // Impression des résultats de l'union
-    printf("Résultat de l'union : %d\n", union_taille);
-
     // Calcul de la similarité
     if (union_taille == 0) {
         return 0.0; // Éviter la division par zéro
     }
     return (float)intersection / union_taille;
+}
+
+// Fonction pour calculer les similarités pour un utilisateur donné
+ResultatSimilarite* calculer_similarites_pour_utilisateur(sqlite3 *db, int target_user_id, int *result_count) {
+    sqlite3_stmt *stmt;
+    ResultatSimilarite *results = NULL;
+    *result_count = 0;
+
+    // Requête pour obtenir tous les autres utilisateurs
+    const char *query_users =
+        "SELECT id FROM users WHERE id != ?;";
+
+    sqlite3_prepare_v2(db, query_users, -1, &stmt, NULL);
+    sqlite3_bind_int(stmt, 1, target_user_id);
+
+    // Parcourir tous les utilisateurs et calculer les similarités
+    while (sqlite3_step(stmt) == SQLITE_ROW) {
+        int user_id = sqlite3_column_int(stmt, 0);
+
+        // Recalculer la taille et allouer un nouvel espace pour les résultats
+        results = realloc(results, (*result_count + 1) * sizeof(ResultatSimilarite));
+        if (!results) {
+            fprintf(stderr, "Erreur d'allocation mémoire\n");
+            exit(EXIT_FAILURE);
+        }
+
+        // Stocker l'ID de l'utilisateur et la similarité calculée
+        results[*result_count].user_id = user_id;
+        results[*result_count].similarite = calculer_jaccard(db, target_user_id, user_id);
+        (*result_count)++;
+    }
+    sqlite3_finalize(stmt);
+
+    return results;
 }
 
 int main() {
@@ -64,13 +98,21 @@ int main() {
         return 1;
     }
 
-    int user1_id = 1;
-    int user2_id = 2;
+    int target_user_id = 1; // ID de l'utilisateur pour lequel on calcule les similarités
+    int result_count = 0;
 
-    float similarite = calculer_jaccard(db, user1_id, user2_id);
+    // Calcul des similarités
+    ResultatSimilarite *similarites = calculer_similarites_pour_utilisateur(db, target_user_id, &result_count);
 
-    printf("La similarité de Jaccard entre l'utilisateur %d et l'utilisateur %d est : %.2f\n", 
-            user1_id, user2_id, similarite);
+    // Affichage des résultats
+    printf("Similarités de Jaccard pour l'utilisateur %d :\n", target_user_id);
+    for (int i = 0; i < result_count; i++) {
+        printf("Utilisateur %d : Similarité = %.2f\n",
+               similarites[i].user_id, similarites[i].similarite);
+    }
+
+    // Libération de la mémoire
+    free(similarites);
 
     sqlite3_close(db);
     return 0;
