@@ -5,6 +5,7 @@ from src.UI.components.category_frame import CategoryFrame
 
 if TYPE_CHECKING:
     from src.UI.app import App
+    from src.database.utils.user_movie import UserMovie
 
 
 class CategoryContainerFrame(ttk.Frame):
@@ -19,14 +20,23 @@ class CategoryContainerFrame(ttk.Frame):
         )
         self.parent = parent
         self.kwargs = kwargs
+        self.display_movies_by_genre: list[list[UserMovie]]
         self.categories: list[CategoryFrame] = []
-        self.create_widgets()
 
     def create_widgets(self):
         self.categories = [
             CategoryFrame(
                 self,
-                title=cat
+                self.parent,
+                i[0].movie.genre,
+                [
+                    user_movie
+                    for user_movie in i
+                ]
             )
-            for id, cat in enumerate(['Category 1', 'Category 2', 'Category 3', 'Category 4', 'Category 5', 'Category 6'])
+            for i in self.display_movies_by_genre
         ]
+
+    def disable(self) -> None:
+        for category in self.categories:
+            category.disable()

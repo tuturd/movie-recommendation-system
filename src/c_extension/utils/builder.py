@@ -1,32 +1,26 @@
-from setuptools import setup, Extension
-from Cython.Build import cythonize
+# import ctypes
+import os
 from utils.settings import Settings
+from pathlib import Path
+
 
 settings = Settings()
 
-extensions = [
-    Extension(
-        extension.extension_name,
-        sources=[
-            f'{extension.extension_name}/{extension.extension_name}.pyx',
-            f'{extension.extension_name}/{extension.sources_name}.c',
-        ],
-        libraries=['sqlite3'],  # Ajoutez cette ligne pour lier la bibliothèque SQLite
-        include_dirs=['/usr/include'],  # Chemin vers les fichiers d'en-tête SQLite
-        library_dirs=['/usr/lib'],  # Chemin vers les bibliothèques SQLite
-        language='c'
-    )
-    for extension in settings.extensions
-]
-
 
 def build() -> None:
-    setup(
-        name='double',
-        ext_modules=cythonize(extensions, show_all_warnings=True),
-        script_args=['build_ext', '--inplace', '--build-lib', settings.lib_dir]  # Indique où construire l'extension compilée
-    )
+    output_dir = Path(__file__).parent.parent / settings.lib_dir
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    for extension in settings.extensions:
+        source_files = [
+            f'{extension.extension_name}/{extension.sources_name}.c',
+            f'{extension.extension_name}/{extension.sources_name}.h',
+        ]
+        output_file = output_dir / f'{extension.extension_name}.so'
+        compile_command = f"gcc -shared -o {output_file} {' '.join(source_files)} -I/usr/include -L/usr/lib -lsqlite3 -fPIC"
+        os.system(compile_command)
 
 
 if __name__ == '__main__':
-    print("Please run the script 'extension.py' instead.")  # noqa: T201
+    build()
+    print("Build completed. Please run the script 'extension.py' instead.")  # noqa: T201

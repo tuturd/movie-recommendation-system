@@ -7,7 +7,7 @@ from src.database.utils import director as DirectorUtils
 logger = get_logger(__name__)
 
 
-class NewDirector(tk.Toplevel):
+class Profile(tk.Toplevel):
 
     def __init__(self, parent, on_destroy):
         super().__init__(parent)

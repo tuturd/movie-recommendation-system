@@ -38,3 +38,4 @@ CREATE TABLE IF NOT EXISTS userMovie (
     FOREIGN KEY (userId) REFERENCES user(id),
     FOREIGN KEY (movieId) REFERENCES movie(id)
 );
+

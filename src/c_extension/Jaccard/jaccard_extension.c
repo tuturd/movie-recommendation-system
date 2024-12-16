@@ -21,6 +21,10 @@ float calculer_jaccard(sqlite3 *db, int user1_id, int user2_id) {
         "JOIN userMovie AS um2 "
         "ON um1.movieId = um2.movieId "
         "WHERE um1.userId = ? AND um2.userId = ?;";
+        "FROM userMovie AS um1 "
+        "JOIN userMovie AS um2 "
+        "ON um1.movieId = um2.movieId "
+        "WHERE um1.userId = ? AND um2.userId = ?;";
 
     sqlite3_prepare_v2(db, query_intersection, -1, &stmt, NULL);
     sqlite3_bind_int(stmt, 1, user1_id);
@@ -33,6 +37,9 @@ float calculer_jaccard(sqlite3 *db, int user1_id, int user2_id) {
 
     // Requête pour calculer l'union
     const char *query_union =
+        "SELECT COUNT(DISTINCT movieId) "
+        "FROM userMovie "
+        "WHERE userId = ? OR userId = ?;";
         "SELECT COUNT(DISTINCT movieId) "
         "FROM userMovie "
         "WHERE userId = ? OR userId = ?;";
@@ -53,10 +60,20 @@ float calculer_jaccard(sqlite3 *db, int user1_id, int user2_id) {
 }
 
 // Fonction pour calculer les similarités pour un utilisateur donné
-ResultatSimilarite* calculer_similarites_pour_utilisateur(sqlite3 *db, int target_user_id, int *result_count) {
+ResultatSimilarite* calculer_similarites_pour_utilisateur(char *db_directory, int target_user_id) {
+    sqlite3 *db;
     sqlite3_stmt *stmt;
     ResultatSimilarite *results = NULL;
-    *result_count = 0;
+    int result_count = 0;
+    char sql[256];
+
+    int rc = sqlite3_open(db_directory, &db);
+
+    if (rc) {
+        fprintf(stderr, "Erreur d'ouverture de la base de données : %s\n", sqlite3_errmsg(db));
+        exit(EXIT_FAILURE);
+        return NULL;
+    }
 
     const char *query_users = "SELECT id FROM user WHERE id != ?;";
 
@@ -66,42 +83,59 @@ ResultatSimilarite* calculer_similarites_pour_utilisateur(sqlite3 *db, int targe
     while (sqlite3_step(stmt) == SQLITE_ROW) {
         int user_id = sqlite3_column_int(stmt, 0);
 
-        results = realloc(results, (*result_count + 1) * sizeof(ResultatSimilarite));
+        // Recalculer la taille et allouer un nouvel espace pour les résultats
+        results = realloc(results, (result_count + 1) * sizeof(ResultatSimilarite));
         if (!results) {
             fprintf(stderr, "Erreur d'allocation mémoire\n");
             exit(EXIT_FAILURE);
         }
 
-        results[*result_count].user_id = user_id;
-        results[*result_count].similarite = calculer_jaccard(db, target_user_id, user_id);
-        (*result_count)++;
+        // Stocker l'ID de l'utilisateur et la similarité calculée
+        results[result_count].user_id = user_id;
+        results[result_count].similarite = calculer_jaccard(db, target_user_id, user_id);
+        result_count++;
     }
     sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    results = realloc(results, (result_count + 1) * sizeof(ResultatSimilarite));
+    if (!results) {
+        fprintf(stderr, "Erreur d'allocation mémoire\n");
+        exit(EXIT_FAILURE);
+    }
+    results[result_count].user_id = -1;
+    results[result_count].similarite = 0;
 
     return results;
 }
 
+
+
 int main() {
-    sqlite3 *db;
-    int rc = sqlite3_open("../../database/seed/seed.db", &db);
+    // sqlite3 *db;
+    // int rc = sqlite3_open("films_recommendation.db", &db);
 
-    if (rc) {
-        fprintf(stderr, "Erreur d'ouverture de la base de données : %s\n", sqlite3_errmsg(db));
-        return 1;
-    }
+    // if (rc) {
+    //     fprintf(stderr, "Erreur d'ouverture de la base de données : %s\n", sqlite3_errmsg(db));
+    //     return 1;
+    // }
 
-    int target_user_id = 1; // ID de l'utilisateur pour lequel on calcule les similarités
-    int result_count = 0;
+    // int target_user_id = 1; // ID de l'utilisateur pour lequel on calcule les similarités
+    // int result_count = 0;
 
-    ResultatSimilarite *similarites = calculer_similarites_pour_utilisateur(db, target_user_id, &result_count);
+    // // Calcul des similarités
+    // ResultatSimilarite *similarites = calculer_similarites_pour_utilisateur(db, target_user_id, &result_count);
 
-    printf("Similarités de Jaccard pour l'utilisateur %d :\n", target_user_id);
-    for (int i = 0; i < result_count; i++) {
-        printf("Utilisateur %d : Similarité = %.2f\n",
-               similarites[i].user_id, similarites[i].similarite);
-    }
+    // // Affichage des résultats
+    // printf("Similarités de Jaccard pour l'utilisateur %d :\n", target_user_id);
+    // for (int i = 0; i < result_count; i++) {
+    //     printf("Utilisateur %d : Similarité = %.2f\n",
+    //            similarites[i].user_id, similarites[i].similarite);
+    // }
 
-    free(similarites);
-    sqlite3_close(db);
-    return 0;
+    // // Libération de la mémoire
+    // free(similarites);
+
+    // sqlite3_close(db);
+    // return 0;
 }
