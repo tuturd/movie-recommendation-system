@@ -20,6 +20,7 @@ class CategoryFrame(ttk.Frame):
         self._app = app
         self.title = title
         self.user_movies = user_movies
+        self.movie_frames: list[MovieFrame] = []
 
         self.create_widgets()
 
@@ -40,12 +41,15 @@ class CategoryFrame(ttk.Frame):
         self.separator.grid(row=1, column=0, columnspan=len(self.user_movies), sticky='ew', pady=(0, 5))
 
         for i, user_movie in enumerate(self.user_movies):
-            MovieFrame(
-                self,
-                self._app,
-                user_movie,
-                column=i
+            self.movie_frames.append(
+                MovieFrame(
+                    self,
+                    self._app,
+                    user_movie,
+                    column=i
+                )
             )
 
-        # for idx in range(len(self.user_movies)):
-        #     self.grid_columnconfigure(idx, weight=1)
+    def disable(self) -> None:
+        for user_movie in self.movie_frames:
+            user_movie.disable()

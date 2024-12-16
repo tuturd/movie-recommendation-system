@@ -98,3 +98,6 @@ class MovieFrame(ttk.Frame):
 
     def __on_new_rate_destroy(self):
         self._app.create_widgets()
+
+    def disable(self) -> None:
+        self.button_rate['state'] = 'disable'

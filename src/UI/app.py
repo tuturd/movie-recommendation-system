@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 from src.UI.auth import Auth
+from src.UI.profile import Profile
 from src.UI.components.actions_frame import ActionsFrame
 from src.UI.components.criteria_frame import CriteriaFrame
 from src.UI.components.filter_frame import FilterFrame
@@ -23,6 +24,7 @@ class App(tk.Tk):
         self.filter_frame_open: bool = kwargs.get('filter_frame_open', False)
         self.label_title: ttk.Label = None
         self.button_logout: ttk.Button = None
+        self.button_profile: ttk.Button = None
         self.frame_actions: ActionsFrame = None
         self.frame_criteria: CriteriaFrame = None
         self.frame_filter: FilterFrame = None
@@ -38,8 +40,7 @@ class App(tk.Tk):
         )
         self.label_title.grid(
             row=0,
-            column=0,
-            columnspan=2
+            column=0
         )
 
         self.button_logout = ttk.Button(
@@ -48,6 +49,19 @@ class App(tk.Tk):
             command=self.restart_auth_process
         )
         self.button_logout.grid(
+            row=0,
+            column=2,
+            pady=5,
+            padx=5,
+            sticky='e'
+        )
+
+        self.button_profile = ttk.Button(
+            self,
+            text='Mon Profil',
+            command=self.profile_process
+        )
+        self.button_profile.grid(
             row=0,
             column=1,
             pady=5,
@@ -59,6 +73,7 @@ class App(tk.Tk):
         self.frame_container.grid(
             row=1,
             column=0,
+            columnspan=3,
             sticky='w'
         )
 
@@ -82,9 +97,11 @@ class App(tk.Tk):
         self.frame_category = CategoryContainerFrame(self)
 
     def disable(self):
+        self.button_profile['state'] = 'disable'
         self.button_logout['state'] = 'disable'
         self.frame_actions.disable()
         self.frame_criteria.disable()
+        self.frame_category.disable()
 
     def restart_auth_process(self) -> None:
         self.auth = self.auth_process()
@@ -102,6 +119,13 @@ class App(tk.Tk):
         self.create_widgets()
         self.refresh_movies()
         self.deiconify()
+
+    def profile_process(self) -> Profile:
+        self.disable()
+        return Profile(self.on_profile_destroy)
+
+    def on_profile_destroy(self):
+        self.create_widgets()
 
     def open_filter_frame(self):
         self.disable()

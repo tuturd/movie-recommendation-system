@@ -36,3 +36,7 @@ class CategoryContainerFrame(ttk.Frame):
             )
             for i in self.display_movies_by_genre
         ]
+
+    def disable(self) -> None:
+        for category in self.categories:
+            category.disable()

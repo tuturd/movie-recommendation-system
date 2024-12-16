@@ -73,6 +73,7 @@ class ActionsFrame(ttk.LabelFrame):
 
     def __on_new_director_destroy(self):
         self.app.create_widgets()
+        self.app.refresh_movies()
 
     def __new_movie_process(self):
         self.app.disable()
@@ -81,6 +82,7 @@ class ActionsFrame(ttk.LabelFrame):
 
     def __on_new_movie_destroy(self):
         self.app.create_widgets()
+        self.app.refresh_movies()
 
     def __new_rate_process(self):
         self.app.disable()
@@ -89,3 +91,4 @@ class ActionsFrame(ttk.LabelFrame):
 
     def __on_new_rate_destroy(self):
         self.app.create_widgets()
+        self.app.refresh_movies()
