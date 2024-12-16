@@ -29,7 +29,7 @@ class NewMovie(tk.Toplevel):
 
         self.label = ttk.Label(
             self,
-            text='Filme :'
+            text='Film :'
         )
         self.label.grid(
             row=1,
