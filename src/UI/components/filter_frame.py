@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 
 class FilterFrame(ttk.LabelFrame):
-    def __init__(self, parent: App):
+    def __init__(self, parent: ttk.Frame, app: App):
         super().__init__(
             parent,
             borderwidth=2,
@@ -16,12 +16,11 @@ class FilterFrame(ttk.LabelFrame):
             text='Filtres',
         )
         self.grid(
-            row=2,
-            column=0,
-            columnspan=2,
+            row=0,
+            column=2,
             padx=5
         )
-        self.parent = parent
+        self.app = app
         self.create_widgets()
 
     def create_widgets(self):
@@ -86,5 +85,5 @@ class FilterFrame(ttk.LabelFrame):
         )
 
     def on_submit(self):
-        self.parent.filter_frame_open = False
-        self.parent.create_widgets()
+        self.app.close_filter_frame()
+        self.app.create_widgets()

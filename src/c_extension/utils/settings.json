@@ -1,8 +1,12 @@
 {
     "extensions": [
         {
-            "extension_name": "double",
-            "sources_name": "double_extension"
+            "extension_name": "user",
+            "sources_name": "user_extension"
+        },
+        {
+            "extension_name": "Jaccard",
+            "sources_name": "jaccard_extension"
         }
     ],
     "lib_dir": "lib/",

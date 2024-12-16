@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 
 
 class CriteriaFrame(ttk.LabelFrame):
-    def __init__(self, parent: App):
+    def __init__(self, parent: ttk.Frame, app: App):
         super().__init__(
             parent,
             borderwidth=2,
@@ -16,26 +16,14 @@ class CriteriaFrame(ttk.LabelFrame):
             text='Critères',
         )
         self.grid(
-            row=1,
+            row=0,
             column=1,
-            padx=5
+            padx=5,
         )
-        self.parent = parent
+        self.app = app
         self.create_widgets()
 
     def create_widgets(self):
-        self.button_filter = ttk.Button(
-            self,
-            text='Filtres',
-            command=self.update_filter_process
-        )
-        self.button_filter.grid(
-            row=0,
-            column=0,
-            pady=5,
-            padx=5
-        )
-
         self.combo = ttk.Combobox(
             self,
             values=[
@@ -47,17 +35,27 @@ class CriteriaFrame(ttk.LabelFrame):
         )
         self.combo.grid(
             row=0,
-            column=1,
+            column=0,
             padx=5,
             pady=5
         )
         self.combo.current(1)
 
+        self.button_filter = ttk.Button(
+            self,
+            text='Filtres',
+            command=self._update_filter_process
+        )
+        self.button_filter.grid(
+            row=0,
+            column=1,
+            pady=5,
+            padx=5
+        )
+
     def disable(self):
         self.button_filter['state'] = 'disable'
         self.combo['state'] = 'disable'
 
-    def update_filter_process(self):
-        self.parent.filter_frame_open = True
-        self.parent.create_widgets()
-        self.parent.disable()
+    def _update_filter_process(self):
+        self.app.open_filter_frame()

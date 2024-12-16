@@ -11,26 +11,26 @@ if TYPE_CHECKING:
 
 
 class ActionsFrame(ttk.LabelFrame):
-    def __init__(self, parent: App):
+    def __init__(self, parent: ttk.Frame, app: App):
         super().__init__(
             parent,
             borderwidth=2,
             relief=tk.SOLID,
-            text='Actions'
+            text='Actions',
         )
         self.grid(
-            row=1,
+            row=0,
             column=0,
-            padx=5
+            padx=10,
         )
-        self.parent = parent
+        self.app = app
         self.create_widgets()
 
     def create_widgets(self):
         self.button_new_movie = ttk.Button(
             self,
             text='Ajouter un film',
-            command=self.new_movie_process
+            command=self.__new_movie_process
         )
         self.button_new_movie.grid(
             row=0,
@@ -42,7 +42,7 @@ class ActionsFrame(ttk.LabelFrame):
         self.button_new_director = ttk.Button(
             self,
             text='Ajouter un réalisateur',
-            command=self.new_director_process
+            command=self.__new_director_process
         )
         self.button_new_director.grid(
             row=0,
@@ -53,7 +53,7 @@ class ActionsFrame(ttk.LabelFrame):
         self.button_new_rate = ttk.Button(
             self,
             text='Noter un film',
-            command=self.new_rate_process
+            command=self.__new_rate_process
         )
         self.button_new_rate.grid(
             row=0,
@@ -66,26 +66,26 @@ class ActionsFrame(ttk.LabelFrame):
         self.button_new_director['state'] = 'disable'
         self.button_new_rate['state'] = 'disable'
 
-    def new_director_process(self):
-        self.parent.disable()
-        self.new_director = NewDirector(self.parent, self.on_new_director_destroy)
-        self.parent.wait_window(self.new_director)
+    def __new_director_process(self):
+        self.app.disable()
+        self.new_director = NewDirector(self.app, self.__on_new_director_destroy)
+        self.app.wait_window(self.new_director)
 
-    def on_new_director_destroy(self):
-        self.parent.create_widgets()
+    def __on_new_director_destroy(self):
+        self.app.create_widgets()
 
-    def new_movie_process(self):
-        self.parent.disable()
-        self.new_movie = NewMovie(self.parent, self.on_new_movie_destroy)
-        self.parent.wait_window(self.new_movie)
+    def __new_movie_process(self):
+        self.app.disable()
+        self.new_movie = NewMovie(self.app, self.__on_new_movie_destroy)
+        self.app.wait_window(self.new_movie)
 
-    def on_new_movie_destroy(self):
-        self.parent.create_widgets()
+    def __on_new_movie_destroy(self):
+        self.app.create_widgets()
 
-    def new_rate_process(self):
-        self.parent.disable()
-        self.new_rate = NewRate(self.parent, self.on_new_rate_destroy)
-        self.parent.wait_window(self.new_rate)
+    def __new_rate_process(self):
+        self.app.disable()
+        self.new_rate = NewRate(self.app, self.__on_new_rate_destroy)
+        self.app.wait_window(self.new_rate)
 
-    def on_new_rate_destroy(self):
-        self.parent.create_widgets()
+    def __on_new_rate_destroy(self):
+        self.app.create_widgets()
