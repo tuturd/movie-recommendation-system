@@ -57,7 +57,7 @@ class MovieFrame(ttk.Frame):
 
         self.label_rate = ttk.Label(
             self,
-            text='Note moyenne : 4.5/5',
+            text=f'Note moyenne : {self.user_movie.rating}/5',
             anchor=tk.W,
             justify=tk.LEFT
         )
