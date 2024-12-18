@@ -16,7 +16,7 @@ class CategoryContainerFrame(ttk.Frame):
         self.grid(
             row=3,
             column=0,
-            columnspan=2
+            columnspan=3
         )
         self.parent = parent
         self.kwargs = kwargs

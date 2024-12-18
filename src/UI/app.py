@@ -122,10 +122,11 @@ class App(tk.Tk):
 
     def profile_process(self) -> Profile:
         self.disable()
-        return Profile(self.on_profile_destroy)
+        return Profile(self, self.on_profile_destroy)
 
     def on_profile_destroy(self):
         self.create_widgets()
+        self.refresh_movies()
 
     def open_filter_frame(self):
         self.disable()
