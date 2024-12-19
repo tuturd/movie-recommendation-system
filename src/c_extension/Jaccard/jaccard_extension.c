@@ -40,9 +40,6 @@ float calculer_jaccard(sqlite3 *db, int user1_id, int user2_id) {
         "SELECT COUNT(DISTINCT movieId) "
         "FROM userMovie "
         "WHERE userId = ? OR userId = ?;";
-        "SELECT COUNT(DISTINCT movieId) "
-        "FROM userMovie "
-        "WHERE userId = ? OR userId = ?;";
 
     sqlite3_prepare_v2(db, query_union, -1, &stmt, NULL);
     sqlite3_bind_int(stmt, 1, user1_id);
@@ -65,7 +62,6 @@ ResultatSimilarite* calculer_similarites_pour_utilisateur(char *db_directory, in
     sqlite3_stmt *stmt;
     ResultatSimilarite *results = NULL;
     int result_count = 0;
-    char sql[256];
 
     int rc = sqlite3_open(db_directory, &db);
 

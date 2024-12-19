@@ -31,7 +31,11 @@
 Installer le repository
 `git clone https://github.com/tuturd/movie-recommendation-system.git`
 
-Se placer à la racine du repository.
+Se placer à la racine du repository, branche `dev`.
+
+Le repository est organisé comme suit:
+- `dev`: developpement de nouvelles fonctionnalitées, correctifs
+- `master`: version stable de l'application
 
 
 ## Python
@@ -95,12 +99,18 @@ Modifier [src/database/seed/seed.sql](src/database/seed/seed.sql)
 <hr>
 
 ## 5. Extension C
+Utilisation du module `ctypes` installée par défaut sur Python.
+Lien vers la documentation : [ici](https://docs.python.org/3/library/ctypes.html)
+
 Se déplacer dans [src/c_extension](src/c_extension)
 
 ### Compilation
+Le code C est compilé en extension Python .so via le compilateur [gcc](https://www.gnu.org/).
+Un script de génération automatique peut être lancé via la commande suivante:
 `python extension.py build`
 
 ### Remise à zéro
+Pour supprimer les librairies, fichiers de builds et dossiers d'anciennes compilation du code C, entrer la commande suivante:
 `python extension.py reset`
 
 ### Paramètres

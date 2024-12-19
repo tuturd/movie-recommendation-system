@@ -1,7 +1,12 @@
+from __future__ import annotations
+from typing import TYPE_CHECKING
 import tkinter as tk
 from tkinter import ttk
 from src.utils.logging import get_logger
-from src.database.utils import director as DirectorUtils
+from src.database.utils.user import get_user_profile
+
+if TYPE_CHECKING:
+    from src.UI.app import App
 
 
 logger = get_logger(__name__)
@@ -9,91 +14,60 @@ logger = get_logger(__name__)
 
 class Profile(tk.Toplevel):
 
-    def __init__(self, parent, on_destroy):
+    def __init__(self, parent: App, on_destroy):
         super().__init__(parent)
+        self.parent = parent
         self.on_destroy = on_destroy
-        self.title('Nouveau Producteur - Movie Recommendation System')
+        self.title('Mon Profil - Movie Recommendation System')
         self.protocol('WM_DELETE_WINDOW', self.close)
+        self.profile = get_user_profile(self.parent.user.id)
         self.create_widgets()
 
     def create_widgets(self):
-        self.label = ttk.Label(
+        self.label_name = ttk.Label(
             self,
-            text="Ajout d'un producteur"
+            text=f'{self.parent.user.firstname} {self.parent.user.lastname}'
         )
-        self.label.grid(
+        self.label_name.grid(
             row=0,
             column=0,
-            columnspan=2,
-            pady=20
         )
 
-        self.firstname_label = ttk.Label(
+        self.label_username = ttk.Label(
             self,
-            text='Prénom :'
+            text=f'Pseudonyme : {self.parent.user.username}'
         )
-        self.firstname_label.grid(
-            row=1,
-            column=0,
-            padx=10,
-            pady=10
-        )
-
-        self.firstname_entry = ttk.Entry(
-            self,
-        )
-        self.firstname_entry.grid(
-            row=1,
+        self.label_username.grid(
+            row=0,
             column=1,
-            padx=10,
-            pady=10
         )
-        self.firstname_entry.focus_set()
 
-        self.lastname_label = ttk.Label(
+        self.label_birth_date = ttk.Label(
             self,
-            text='Nom :'
+            text=f'Date de naissance : {self.parent.user.birth_date}'
         )
-        self.lastname_label.grid(
+        self.label_birth_date.grid(
             row=2,
             column=0,
-            padx=10,
-            pady=10
         )
 
-        self.lastname_entry = ttk.Entry(
+        self.label_director = ttk.Label(
             self,
+            text=f'réalisateurs préférés : 1. {self.profile.directors[0].firstname} {self.profile.directors[0].lastname} 2. {self.profile.directors[1].firstname} {self.profile.directors[1].lastname} 3. {self.profile.directors[2].firstname} {self.profile.directors[2].lastname}'
         )
-        self.lastname_entry.grid(
-            row=2,
-            column=1,
-            padx=10,
-            pady=10
-        )
-        self.lastname_entry.bind('<Return>', self.on_submit)
-
-        self.button = ttk.Button(
-            self,
-            text='Ajouter',
-            command=self.on_submit
-        )
-        self.button.grid(
+        self.label_director.grid(
             row=3,
             column=0,
-            columnspan=2,
-            pady=10,
-            sticky='ew'
         )
 
-    def on_submit(self, e=None):
-        firstname = self.firstname_entry.get()
-        lastname = self.lastname_entry.get()
-        if self._is_well_completed(firstname) and self._is_well_completed(lastname):
-            DirectorUtils.insert(firstname, lastname)
-            self.close()
-
-    def _is_well_completed(self, value: str) -> bool:
-        return all(c.isalpha() or c == '-' for c in value) and value != ''
+        self.label_director = ttk.Label(
+            self,
+            text=f'genres préférés : 1. {self.profile.genres[0].name} 2. {self.profile.genres[1].name} 3. {self.profile.genres[2].name}'
+        )
+        self.label_director.grid(
+            row=4,
+            column=0,
+        )
 
     def close(self):
         self.destroy()

@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS director (
 CREATE TABLE IF NOT EXISTS movie (
     id INTEGER PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
-    releaseDate TIMESTAMP NOT NULL,
+    releaseDate INT NOT NULL,
     genreId INT NOT NULL,
     directorId INT NOT NULL,
     price INT NOT NULL,
