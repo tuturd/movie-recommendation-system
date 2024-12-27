@@ -15,9 +15,13 @@ def build() -> None:
             f'{extension.extension_name}/{extension.sources_name}.c',
             f'{extension.extension_name}/{extension.sources_name}.h',
         ]
-        output_file = output_dir / f'{extension.extension_name}.so'
-        compile_command = f"gcc -shared -o {output_file} {' '.join(source_files)} -I/usr/include -L/usr/lib -lsqlite3 -fPIC"
-        os.system(compile_command)
+        linux_output_file = output_dir / f'{extension.extension_name}.so'
+        linux_compile_command = f"gcc -shared -o {linux_output_file} {' '.join(source_files)} -I/usr/include -L/usr/lib -lsqlite3 -fPIC"
+        os.system(linux_compile_command)
+
+        win_output_file = output_dir / f'{extension.extension_name}.dll'
+        win_compile_command = f"gcc -shared -o {win_output_file} {' '.join(source_files)} -I/usr/include -L/usr/lib -lsqlite3 -fPIC"
+        os.system(win_compile_command)
 
 
 if __name__ == '__main__':

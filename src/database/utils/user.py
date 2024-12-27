@@ -1,11 +1,11 @@
+from src.c_extension.utils.extension import LIB_FILE_EXTENSION
 from src.database.config import DB_PATH
 from src.classes.user import User
 from src.classes.user_profile import UserProfile
 import ctypes
 from pathlib import Path
 
-
-libuser_path = Path(__file__).parent.parent.parent / 'c_extension/lib/user.so'
+libuser_path = Path(__file__).parent.parent.parent / f'c_extension/lib/user.{LIB_FILE_EXTENSION}'
 libuser = ctypes.CDLL(str(libuser_path))
 
 libuser.get.argtypes = (ctypes.POINTER(ctypes.c_char), ctypes.POINTER(ctypes.c_char))

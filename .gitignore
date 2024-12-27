@@ -4,7 +4,6 @@ doc_test/
 doc/
 
 src/c_extension/build/
-src/c_extension/lib/
 
 .venv/
 

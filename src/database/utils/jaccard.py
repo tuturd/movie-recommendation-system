@@ -1,10 +1,11 @@
+from src.c_extension.utils.extension import LIB_FILE_EXTENSION
 from src.database.config import DB_PATH
 from src.classes.jaccard import ResultatSimilarite
 import ctypes
 from pathlib import Path
 
 
-libjaccard_path = Path(__file__).parent.parent.parent / 'c_extension/lib/Jaccard.so'
+libjaccard_path = Path(__file__).parent.parent.parent / f'c_extension/lib/Jaccard.{LIB_FILE_EXTENSION}'
 libjaccard = ctypes.CDLL(str(libjaccard_path))
 
 libjaccard.calculer_similarites_pour_utilisateur.argtypes = (ctypes.POINTER(ctypes.c_char), ctypes.c_int)

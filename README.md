@@ -4,15 +4,16 @@
 **Sommaire:**
 
 1. [Introduction](#1-introduction)
-2. [Installation](#1-installation)
+2. [Installation](#2-installation)
     - [Respository](#repository)
     - [Python](#python)
-3. [Mise à jour des dépendances Python](#2-mise-à-jour-des-dépendances)
-4. [Base de donnée](#3-base-de-données)
+3. [Mise à jour des dépendances Python](#3-mise-à-jour-des-dépendances)
+4. [Base de donnée](#4-base-de-données)
     - [SQLite3](#sqlite3)
     - [Seeding](#seeding)
     - [Modification du schéma SQL](#mise-à-jour-du-schéma-sql)
-5. [Extension C](#4-extension-c)
+    - [Mise à jour des données d'exemple](#mise-à-jour-des-données-dexemple)
+5. [Extension C](#5-extension-c)
     - [Compilation](#compilation)
     - [Remise à zéro](#remise-à-zéro)
     - [Paramètres](#paramètres)
@@ -20,7 +21,19 @@
 <hr>
 
 ## 1. Introduction
-> à compléter
+Il s'agit d'un projet final de NF06 - Pratique de la programmation, unité d'enseignement de l'Université de Technologie de Troyes.
+
+Ce logiciel consiste en un système de recommandation de film basé sur le degré de similitude d'avis entre les utilisateurs.
+
+Vous souhaitez simplement **tester le logiciel** ?
+Effectuez les étapes suivantes:
+1. [Installation](#2-installation)
+2. [Mise à jour des dépendances Python](#3-mise-à-jour-des-dépendances)
+3. [SQLite3](#sqlite3)
+
+L'initialisation de la base de donnée sera effectuée directement lors de la première execution du logiciel.
+
+Vous souhaitez **ajouter des fonctionnalités** ? Il est nécessaire d'effectuer toutes les étapes mentionnées dans ce README.
 
 <hr>
 
@@ -96,22 +109,36 @@ python database.py example_data
 ### Mise à jour du schéma SQL
 Modifier [src/database/seed/seed.sql](src/database/seed/seed.sql)
 
+### Mise à jour des données d'exemple
+Modifier les fichiers .sql (*sauf seed.sql*) dans le dossier [src/database/seed](src/database/seed)
+
 <hr>
 
 ## 5. Extension C
-Utilisation du module `ctypes` installée par défaut sur Python.
+Utilisation du module `ctypes` installé par défaut sur Python.
 Lien vers la documentation : [ici](https://docs.python.org/3/library/ctypes.html)
+
+### Compilation
+
+Le code C est compilé en extensions Python .so et .dll via le compilateur [gcc](https://www.gnu.org/).
+En fonction du système d'exploitation utilisé lors de l'utilisation de l'application, l'extension adéquate sera automatiquement utilisée (.so sur noyau Linux, .dll sous Windows).
+
+> [!WARNING]  
+> Cette fonction n'est utilisable que sous Linux pour l'instant
 
 Se déplacer dans [src/c_extension](src/c_extension)
 
-### Compilation
-Le code C est compilé en extension Python .so via le compilateur [gcc](https://www.gnu.org/).
 Un script de génération automatique peut être lancé via la commande suivante:
 `python extension.py build`
 
 ### Remise à zéro
+
+> [!INFO]  
+> Se déplacer dans [src/c_extension](src/c_extension)
+
 Pour supprimer les librairies, fichiers de builds et dossiers d'anciennes compilation du code C, entrer la commande suivante:
 `python extension.py reset`
 
 ### Paramètres
+
 Modifier le fichier [/src/c_extension/utils/settings.json](/src/c_extension/utils/settings.json)
