@@ -2,6 +2,7 @@ import tkinter as tk
 import src.database.utils.auth as auth
 from tkinter import ttk
 from src.utils.logging import get_logger
+from src.UI.interface import AdminInterface
 
 
 logger = get_logger(__name__)
@@ -146,8 +147,7 @@ class Auth(tk.Tk):
                 return
             elif user_input == 'admin':
                 self.username = user_input
-                self.auth_error = 'Page indisponible'
-                logger.debug('Administrator page not implemented')
+                self.admin_interface = AdminInterface(self, self.on_admin_interface_destroy)
             else:
                 self.auth_error = 'Utilisateur introuvable'
             self.create_widgets()
@@ -156,6 +156,9 @@ class Auth(tk.Tk):
             logger.error(error)
             self.auth_error = error.message
             self.create_widgets()
+
+    def on_admin_interface_destroy(self):
+        pass
 
     def signin_process(self):
         logger.debug('Signin process not inplemented')
