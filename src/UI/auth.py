@@ -2,6 +2,7 @@ import tkinter as tk
 import src.database.utils.auth as auth
 from tkinter import ttk
 from src.utils.logging import get_logger
+from src.utils.start import starting_sequence
 from src.UI.interface import AdminInterface
 
 
@@ -29,9 +30,10 @@ class Auth(tk.Tk):
         Handles the submission of the username and performs validation.
     """
 
-    def __init__(self, on_destroy):
+    def __init__(self, on_destroy, auth_number):
         super().__init__()
         self.on_destroy = on_destroy
+        self.auth_number = auth_number
         self.auth_error = ''
         self.username = ''
 
@@ -44,6 +46,11 @@ class Auth(tk.Tk):
         self.label_credits: ttk.Label = None
         self.button_login: ttk.Button = None
         self.button_signin: ttk.Button = None
+
+        if self.auth_number == 1:
+            self.withdraw()
+            starting_sequence()
+            self.deiconify()
 
         self.create_widgets()
 

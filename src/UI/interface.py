@@ -13,7 +13,7 @@ class AdminInterface(tk.Toplevel):
 
     def create_widgets(self):
         tk.Button(self, text='Exporter les ventes en CSV', command=AdminUtils.exporter_ventes).pack(pady=10)
-        
+
         # Boutons pour afficher les graphiques
         self.btn_volume = tk.Button(self, text='Volume des ventes (6 derniers mois)', command=AdminUtils.volume_6_mois)
         self.btn_volume.pack(pady=10)

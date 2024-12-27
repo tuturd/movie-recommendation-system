@@ -20,6 +20,7 @@ class App(tk.Tk):
         super().__init__()
         self.title('Movie Recommendation System')
         self.maxsize(1920, 1080)
+        self.auth_number = 0
         self.auth: Auth = self.auth_process()
         self.filter_frame_open: bool = kwargs.get('filter_frame_open', False)
         self.label_title: ttk.Label = None
@@ -112,7 +113,8 @@ class App(tk.Tk):
             self.frame_category.destroy()
         except AttributeError:
             pass
-        return Auth(self.on_auth_destroy)
+        self.auth_number += 1
+        return Auth(self.on_auth_destroy, self.auth_number)
 
     def on_auth_destroy(self):
         self.user = UserUtils.get(self.auth.username)
