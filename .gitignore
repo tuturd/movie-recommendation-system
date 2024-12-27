@@ -10,4 +10,5 @@ src/c_extension/lib/
 
 *.db
 *.env
+*.csv
 *.DS_Store
