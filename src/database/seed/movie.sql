@@ -41,7 +41,7 @@ INSERT INTO movie (title, releaseDate, genreId, directorId, price) VALUES
 ('Do the Right Thing', 1989, 4, 19, 1099),
 ('Malcolm X', 1992, 16, 19, 1299),
 ('Birdman', 2014, 3, 20, 1499),
-('The Revenant', 2015, 2, 20, 1699)
+('The Revenant', 2015, 2, 20, 1699),
 ('The Big Lebowski', 1998, 14, 1, 1199),
 ('The Princess Bride', 1987, 10, 2, 1099),
 ('The Matrix', 1999, 17, 3, 1399),
@@ -61,7 +61,7 @@ INSERT INTO movie (title, releaseDate, genreId, directorId, price) VALUES
 ('The Grandmaster', 2013, 16, 17, 1299),
 ('The Tree of Life', 2011, 11, 18, 1399),
 ('Django Unchained', 2012, 16, 19, 1399),
-('The Hurt Locker', 2008, 17, 20, 1299)
+('The Hurt Locker', 2008, 17, 20, 1299),
 ('Parasite', 2019, 15, 1, 1399),
 ('Nomadland', 2020, 12, 2, 1299),
 ('The Father', 2020, 15, 3, 1499),
@@ -81,7 +81,7 @@ INSERT INTO movie (title, releaseDate, genreId, directorId, price) VALUES
 ('Nightmare Alley', 2021, 15, 17, 1399),
 ('The Card Counter', 2021, 16, 18, 1299),
 ('The Worst Person in the World', 2021, 16, 19, 1199),
-('Drive My Car', 2021, 15, 20, 1299)
+('Drive My Car', 2021, 15, 20, 1299),
 ('Amélie', 2001, 10, 1, 1299),
 ('The Intouchables', 2011, 15, 2, 1399),
 ('The Diving Bell and the Butterfly', 2007, 12, 3, 1499),
@@ -101,4 +101,4 @@ INSERT INTO movie (title, releaseDate, genreId, directorId, price) VALUES
 ('The Death of Stalin', 2017, 16, 17, 1499),
 ('The Young Karl Marx', 2017, 12, 18, 1299),
 ('The Young Ahmed', 2019, 12, 19, 1399),
-('The Young Girl and the Sea', 2020, 10, 20, 1199)
+('The Young Girl and the Sea', 2020, 10, 20, 1199);

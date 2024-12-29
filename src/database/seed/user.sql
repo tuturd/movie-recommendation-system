@@ -1,5 +1,3 @@
-
--- Insertion des utilisateurs avec un id unique
 INSERT INTO user (id, firstname, lastname, birthDate, username) VALUES
 (1, 'John', 'Doe', '1990-01-01', 'johndoe'),
 (2, 'Jane', 'Smith', '1985-02-14', 'janesmith'),
@@ -30,7 +28,7 @@ INSERT INTO user (id, firstname, lastname, birthDate, username) VALUES
 (27, 'Sebastian', 'King', '1988-03-29', 'sebastianking'),
 (28, 'Avery', 'Wright', '1994-04-12', 'averywright'),
 (29, 'Jack', 'Lopez', '1985-05-20', 'jacklopez'),
-(30, 'Scarlett', 'Hill', '1996-06-30', 'scarlethill');
+(30, 'Scarlett', 'Hill', '1996-06-30', 'scarlethill'),
 (31, 'Oliver', 'Brown', '1980-07-04', 'oliverbrown'),
 (32, 'Sophie', 'Evans', '1989-08-12', 'sophieevans'),
 (33, 'Elijah', 'Miller', '1993-09-24', 'elijahmiller'),
@@ -50,7 +48,7 @@ INSERT INTO user (id, firstname, lastname, birthDate, username) VALUES
 (47, 'Lucas', 'Stewart', '1984-11-18', 'lucasstewart'),
 (48, 'Olivia', 'Sanchez', '1992-12-28', 'oliviasanchez'),
 (49, 'Mateo', 'Morris', '1988-01-12', 'mateomorris'),
-(50, 'Amelia', 'Rogers', '1996-02-24', 'ameliarogers')
+(50, 'Amelia', 'Rogers', '1996-02-24', 'ameliarogers'),
 (51, 'Alexander', 'Reed', '1985-03-14', 'alexanderreed'),
 (52, 'Aria', 'Cook', '1990-04-22', 'ariacook'),
 (53, 'Daniel', 'Morgan', '1983-05-02', 'danielmorgan'),
@@ -70,7 +68,7 @@ INSERT INTO user (id, firstname, lastname, birthDate, username) VALUES
 (67, 'Ezra', 'Hughes', '1985-07-22', 'ezraughes'),
 (68, 'Zoe', 'Edwards', '1997-08-11', 'zoeedwards'),
 (69, 'Owen', 'Simmons', '1983-09-01', 'owensimmons'),
-(70, 'Layla', 'Bennett', '1991-10-20', 'laylabennett')
+(70, 'Layla', 'Bennett', '1991-10-20', 'laylabennett'),
 (71, 'Adam', 'Cruz', '1980-01-05', 'adamcruz'),
 (72, 'Aurora', 'Harding', '1985-02-12', 'auroraharding'),
 (73, 'Caleb', 'Ward', '1988-03-20', 'calebward'),
