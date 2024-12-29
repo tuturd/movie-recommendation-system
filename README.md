@@ -28,8 +28,7 @@ Ce logiciel consiste en un système de recommandation de film basé sur le degr�
 Vous souhaitez simplement **tester le logiciel** ?
 Effectuez les étapes suivantes:
 1. [Installation](#2-installation)
-2. [Mise à jour des dépendances Python](#3-mise-à-jour-des-dépendances)
-3. [SQLite3](#sqlite3)
+2. [SQLite3](#sqlite3)
 
 L'initialisation de la base de donnée sera effectuée directement lors de la première execution du logiciel.
 
@@ -61,7 +60,7 @@ Configurer ensuite l'environnement virtuel Python
 Activer l'environnement virtuel
 - Sur Linux/Mac : `source .venv/bin/activate`
 - Sur Windows : `.venv\Scripts\activate`
-s
+
 Installer les librairies nécessaires
 ```
 # Pour les modules Python
