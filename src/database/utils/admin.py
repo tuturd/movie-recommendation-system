@@ -9,6 +9,22 @@ logger = get_logger(__name__)
 
 # Ajouter une vente
 def ajouter_vente(user_id, movie_id):
+    """
+    Ajoute une vente pour un utilisateur et un film donnés.
+
+    Parameters:
+    -----------
+    user_id : int
+        L'identifiant de l'utilisateur.
+    movie_id : int
+        L'identifiant du film.
+
+    Raises:
+    -------
+    UserMovieError
+        Si une erreur opérationnelle se produit lors du processus d'insertion.
+    """
+
     conn = db.open_connection()
     cursor = conn.cursor()
 
@@ -36,6 +52,12 @@ def ajouter_vente(user_id, movie_id):
 
 # Exporter les ventes en CSV
 def exporter_ventes():
+    """
+    Exports sales data to a CSV file.
+    This function retrieves sales data from the database, including user names,
+    movie titles, and sale dates, and exports it to a CSV file specified by the user.
+    """
+
     conn = db.open_connection()
     query = """
         SELECT u.firstname || ' ' || u.lastname AS Utilisateur,
@@ -61,6 +83,8 @@ def exporter_ventes():
 
 # Volume des ventes des 6 derniers mois
 def volume_6_mois():
+    """Generates a bar chart showing the volume of sales for the last 6 months."""
+
     conn = db.open_connection()
     cursor = conn.cursor()
     query = """
@@ -93,6 +117,8 @@ def volume_6_mois():
 
 # Top 3 des utilisateurs ayant consommé le plus
 def top_3_utilisateurs():
+    """Retrieves the top 3 users with the highest number of purchases and displays the data in a pie chart."""
+
     conn = db.open_connection()
     cursor = conn.cursor()
     query = """
@@ -125,6 +151,8 @@ def top_3_utilisateurs():
 
 # Top 5 des films les plus vendus
 def top_5_films():
+    """Retrieves the top 5 best-selling movies and displays the data in a bar chart."""
+
     conn = db.open_connection()
     cursor = conn.cursor()
     query = """

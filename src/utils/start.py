@@ -4,6 +4,17 @@ from src.database.seed.example_data_by_app import import_example_data
 
 
 def starting_sequence():
+    """
+    Handles the initial startup sequence for the application.
+
+    This function prompts the user with a series of message boxes to determine
+    if they have previously used the application on the current computer and
+    if the database has been initialized. Based on the user's responses, it
+    may initialize the database and import example data. It also provides
+    information on how to connect to a user or the administration interface.
+
+    Exits the application if the user cancels any of the prompts.
+    """
     res = messagebox.askyesnocancel('Démarrage', 'Avez-vous déjà utilisé cette application sur cet ordinateur ?')
     if res is True:
         return

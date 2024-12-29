@@ -8,6 +8,26 @@ if TYPE_CHECKING:
 
 
 class CriteriaFrame(ttk.LabelFrame):
+    """
+    A class representing the criteria frame for the Movie Recommendation System.
+
+    Attributes:
+    -----------
+    app : App
+        An instance of the main application.
+
+    Methods:
+    --------
+    __init__(parent: ttk.Frame, app: App):
+        Initializes the criteria frame with the given parent and app instance.
+    create_widgets():
+        Creates and arranges the widgets in the criteria frame.
+    disable():
+        Disables the filter button and combo box.
+    _update_filter_process():
+        Handles the filter update process by invoking the app's open_filter_frame method.
+    """
+
     def __init__(self, parent: ttk.Frame, app: App):
         super().__init__(
             parent,
@@ -24,6 +44,8 @@ class CriteriaFrame(ttk.LabelFrame):
         self.create_widgets()
 
     def create_widgets(self):
+        """Create and arrange the widgets in the criteria frame."""
+
         self.combo = ttk.Combobox(
             self,
             values=[
@@ -54,8 +76,12 @@ class CriteriaFrame(ttk.LabelFrame):
         )
 
     def disable(self):
+        """Disables the filter button and combo box."""
+
         self.button_filter['state'] = 'disable'
         self.combo['state'] = 'disable'
 
     def _update_filter_process(self):
+        """Handles the filter update process."""
+
         self.app.open_filter_frame()

@@ -7,9 +7,9 @@ if __name__ == '__main__':
 
     match arg:
         case 'build':
-            build()
+            build()  # Start the build process
         case 'reset':
-            reset()
+            reset()  # Delete the build and libs directories
         case _:
             print('Please provide an argument: build or reset')  # noqa: T201
             sys.exit(1)

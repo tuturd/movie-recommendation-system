@@ -1,6 +1,6 @@
 from src.UI.app import App
 
 try:
-    App().mainloop()
+    App().mainloop()  # Lancement de l'application
 except KeyboardInterrupt:
-    exit()
+    exit()  # Fermeture de l'application

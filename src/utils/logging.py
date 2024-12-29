@@ -6,7 +6,29 @@ LOG_DATE_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 
 class ColoredFormatter(logging.Formatter):
-    """Logging formatter that adds colors to the log messages."""
+    """
+    A custom logging formatter to add colors to log levels and logger names.
+
+    Attributes:
+    -----------
+    LEVEL_COLORS : dict
+        A dictionary mapping log levels to their corresponding color codes.
+
+    Methods:
+    --------
+    format(record)
+        Format the log message with colors for the log level and logger name.
+
+    Parameters:
+    -----------
+    record : logging.LogRecord
+        The log record to format.
+
+    Returns:
+    --------
+    str
+        The formatted log message with colors.
+    """
 
     LEVEL_COLORS = {
         'DEBUG': Fore.GREEN,

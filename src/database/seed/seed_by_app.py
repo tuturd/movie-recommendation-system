@@ -3,6 +3,8 @@ from src.database.config import SEED_PATH
 
 
 def seed_database():
+    """Seeds the SQLite database with initial data from a SQL script file."""
+
     # Connect to the SQLite database
     conn = db.open_connection()
     cursor = conn.cursor()

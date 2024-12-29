@@ -3,12 +3,44 @@ import src.database.utils.connection as db
 
 
 class DirectorError(Exception):
+    """
+    Exception raised for errors related to the Director entity.
+
+    Parameters:
+    -----------
+    error : str
+        A string representing the error type or code.
+    message : str
+        A detailed message describing the error.
+
+    Raises:
+    -------
+    DirectorError
+        If there is an error related to the Director entity.
+    """
+
     def __init__(self, error: str, message: str):
         self.message = message
         super().__init__(error)
 
 
 def insert(firstname: str, lastname: str) -> None:
+    """
+    Insert a new director into the database.
+
+    Parameters:
+    -----------
+    firstname : str
+        The first name of the director.
+    lastname : str
+        The last name of the director.
+
+    Raises:
+    -------
+    DirectorError
+        If there is an operational error during the insertion process.
+    """
+
     conn = db.open_connection()
     cursor = conn.cursor()
 

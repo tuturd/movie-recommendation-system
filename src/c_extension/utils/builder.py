@@ -7,6 +7,8 @@ settings = Settings()
 
 
 def build() -> None:
+    """Compiles and builds shared library files for specified extensions on both Linux and Windows platforms."""
+
     output_dir = Path(__file__).parent.parent / settings.lib_dir
     output_dir.mkdir(parents=True, exist_ok=True)
 

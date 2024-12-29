@@ -7,8 +7,16 @@ settings = Settings()
 current_dir = Path(__file__).resolve().parent.parent
 
 
-# Function to delete a directory if it exists
 def delete_directory(directory):
+    """
+    Recursively delete a directory and all its contents.
+
+    Parameters:
+    -----------
+    directory : pathlib.Path
+        The path to the directory to be deleted.
+    """
+
     try:
         for item in directory.iterdir():
             if item.is_dir():
@@ -21,8 +29,16 @@ def delete_directory(directory):
         print(f'Directory does not exist: {directory}')  # noqa: T201
 
 
-# Function to delete a file if it exists
 def delete_file(directory):
+    """
+    Delete a file from the specified directory.
+
+    Parameters:
+    -----------
+    directory : str
+        The path to the file to be deleted.
+    """
+
     try:
         Path.unlink(directory)
         print(f'Deleted file: {directory}')  # noqa: T201
@@ -31,6 +47,13 @@ def delete_file(directory):
 
 
 def reset() -> None:
+    """
+    Reset the environment by deleting specified directories and compiled files.
+    This function performs the following actions:
+    1. Deletes directories listed in `settings.dirs_to_delete`.
+    2. Deletes compiled files with extensions listed in `settings.extensions`.
+    """
+
     # Delete the directories
     for directory in settings.dirs_to_delete:
         delete_directory(current_dir.joinpath(directory))

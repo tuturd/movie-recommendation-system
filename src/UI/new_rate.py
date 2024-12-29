@@ -16,6 +16,37 @@ logger = get_logger(__name__)
 
 
 class NewRate(tk.Toplevel):
+    """
+    A class to create a new rating window for the Movie Recommendation System.
+
+    Attributes:
+    -----------
+    parent : App
+        The parent application instance.
+    on_destroy : function
+        The callback function to be called when the window is closed.
+    movie_id : int, optional
+        The ID of the movie to be rated (default is None).
+    movie : Movie or EmptyMovie
+        The movie instance to be rated.
+    _all_movies : list
+        A list of all unrated movies for the user.
+
+    Methods:
+    --------
+    __init__(parent: App, on_destroy, movie_id: int = None):
+        Initializes the NewRate window.
+    create_widgets():
+        Creates and arranges the widgets in the window.
+    on_submit(e=None) -> None:
+        Handles the submission of the rating.
+    close() -> None:
+        Closes the window and calls the on_destroy callback.
+    __get_movie(movie_id) -> Movie | EmptyMovie:
+        Retrieves the movie instance based on the movie_id.
+    __movie_update(e=None) -> None:
+        Enables the submit button when a movie is selected from the combobox.
+    """
 
     def __init__(self, parent: App, on_destroy, movie_id: int = None):
         super().__init__(parent)
@@ -30,6 +61,8 @@ class NewRate(tk.Toplevel):
         self.create_widgets()
 
     def create_widgets(self):
+        """Create and arrange the widgets in the window."""
+
         self.label = ttk.Label(
             self,
             text=(
@@ -140,6 +173,8 @@ class NewRate(tk.Toplevel):
             self.button['state'] = 'normal'
 
     def on_submit(self, e=None) -> None:
+        """Handle the submission of the rating."""
+
         UserMovieUtils.insert(UserMovie(
             user_id=self.parent.user.id,
             movie_id=self._all_movies[self.movie_combo.current()].id,
@@ -150,13 +185,19 @@ class NewRate(tk.Toplevel):
         self.close()
 
     def close(self) -> None:
+        """Close the window and call the on_destroy callback."""
+
         self.destroy()
         self.on_destroy()
 
     def __get_movie(self, movie_id) -> Movie | EmptyMovie:
+        """Retrieve the movie instance based on the movie_id."""
+
         if movie_id:
             return MovieUtils.get(movie_id)
         return EmptyMovie()
 
     def __movie_update(self, e=None) -> None:
+        """Enable the submit button when a movie is selected from the combobox."""
+
         self.button.config(state='normal')

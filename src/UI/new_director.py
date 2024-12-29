@@ -8,6 +8,31 @@ logger = get_logger(__name__)
 
 
 class NewDirector(tk.Toplevel):
+    """
+    A class to create a new director entry window in the Movie Recommendation System.
+
+    Attributes:
+    -----------
+    on_destroy : function
+        A callback function to be called when the window is closed.
+
+    Methods:
+    --------
+    __init__(self, parent, on_destroy):
+        Initializes the NewDirector window with the given parent and on_destroy callback.
+
+    create_widgets(self):
+        Creates and arranges the widgets in the NewDirector window.
+
+    on_submit(self, e=None):
+        Handles the submission of the new director form. Validates the input and inserts the new director into the database.
+
+    _is_well_completed(self, value: str) -> bool:
+        Checks if the given value is well-formed (contains only alphabetic characters or hyphens and is not empty).
+
+    close(self):
+        Closes the NewDirector window and calls the on_destroy callback.
+    """
 
     def __init__(self, parent, on_destroy):
         super().__init__(parent)
@@ -17,6 +42,8 @@ class NewDirector(tk.Toplevel):
         self.create_widgets()
 
     def create_widgets(self):
+        """Create and arrange the widgets in the NewDirector window."""
+
         self.label = ttk.Label(
             self,
             text="Ajout d'un producteur"
@@ -86,6 +113,8 @@ class NewDirector(tk.Toplevel):
         )
 
     def on_submit(self, e=None):
+        """Handles the submission of the new director form."""
+
         firstname = self.firstname_entry.get()
         lastname = self.lastname_entry.get()
         if self._is_well_completed(firstname) and self._is_well_completed(lastname):
@@ -93,8 +122,12 @@ class NewDirector(tk.Toplevel):
             self.close()
 
     def _is_well_completed(self, value: str) -> bool:
+        """Check if the given value is well-formed (contains only alphabetic characters or hyphens and is not empty)."""
+
         return all(c.isalpha() or c == '-' for c in value) and value != ''
 
     def close(self):
+        """Close the NewDirector window and call the on_destroy callback."""
+
         self.destroy()
         self.on_destroy()

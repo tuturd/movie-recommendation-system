@@ -12,6 +12,42 @@ if TYPE_CHECKING:
 
 
 class MovieFrame(ttk.Frame):
+    """
+    A class representing a frame for displaying movie information in the Movie Recommendation System.
+
+    Attributes:
+    -----------
+    parent : CategoryFrame
+        The parent frame to which this frame belongs.
+    _app : App
+        The main application instance.
+    user_movie : UserMovie
+        The user-specific movie data to be displayed.
+    label_title : ttk.Label
+        A label widget to display the movie title.
+    label_director : ttk.Label
+        A label widget to display the movie director.
+    label_rate : ttk.Label
+        A label widget to display the average rating of the movie.
+    label_date_and_price : ttk.Label
+        A label widget to display the release date and price of the movie.
+    button_rate : ttk.Button
+        A button widget to initiate the rating process for the movie.
+
+    Methods:
+    --------
+    __init__(parent: CategoryFrame, app: App, user_movie: UserMovie, **kwargs):
+        Initializes the movie frame with the given parent, app, and user_movie data.
+    create_widgets():
+        Creates and arranges the widgets in the movie frame.
+    __new_rate_process():
+        Initiates the process for rating the movie.
+    __on_new_rate_destroy():
+        Callback function to handle the destruction of the rating window.
+    disable() -> None:
+        Disables the rate button.
+    """
+
     def __init__(self, parent: CategoryFrame, app: App, user_movie: UserMovie, **kwargs):
         super().__init__(
             parent,
@@ -31,6 +67,8 @@ class MovieFrame(ttk.Frame):
         self.create_widgets()
 
     def create_widgets(self):
+        """Create and arrange the widgets in the movie frame."""
+
         self.label_title = ttk.Label(
             self,
             text=f'{self.user_movie.movie.title}',
@@ -92,12 +130,18 @@ class MovieFrame(ttk.Frame):
         )
 
     def __new_rate_process(self):
+        """Initiate the process for rating the movie."""
+
         self._app.disable()
         self.new_rate = NewRate(self._app, self.__on_new_rate_destroy, self.user_movie.movie.id)
         self._app.wait_window(self.new_rate)
 
     def __on_new_rate_destroy(self):
+        """Callback function to handle the destruction of the rating window."""
+
         self._app.create_widgets()
 
     def disable(self) -> None:
+        """Disables the rate button."""
+
         self.button_rate['state'] = 'disable'

@@ -9,6 +9,30 @@ if TYPE_CHECKING:
 
 
 class CategoryContainerFrame(ttk.Frame):
+    """
+    A class representing the category container frame for the Movie Recommendation System.
+
+    Attributes:
+    -----------
+    parent : App
+        The parent application instance.
+    kwargs : dict
+        Additional keyword arguments.
+    display_movies_by_genre : list[list[UserMovie]]
+        A list of lists containing UserMovie instances categorized by genre.
+    categories : list[CategoryFrame]
+        A list of CategoryFrame instances representing different movie categories.
+
+    Methods:
+    --------
+    __init__(parent, **kwargs):
+        Initializes the category container frame with the given parent and additional keyword arguments.
+    create_widgets():
+        Creates and arranges the category frames based on the movies categorized by genre.
+    disable():
+        Disables all category frames within the container.
+    """
+
     def __init__(self, parent: App, **kwargs):
         super().__init__(
             parent
@@ -24,6 +48,8 @@ class CategoryContainerFrame(ttk.Frame):
         self.categories: list[CategoryFrame] = []
 
     def create_widgets(self):
+        """Create and arrange the category frames based on the movies categorized by genre."""
+
         self.categories = [
             CategoryFrame(
                 self,
@@ -38,5 +64,7 @@ class CategoryContainerFrame(ttk.Frame):
         ]
 
     def disable(self) -> None:
+        """Disable all category frames within the container."""
+
         for category in self.categories:
             category.disable()

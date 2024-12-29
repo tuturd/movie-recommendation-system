@@ -3,6 +3,8 @@ from src.database.config import SEED_PATH, EXAMPLE_DATA_TABLES
 
 
 def import_example_data():
+    """Seeds the SQLite database with example data sets from SQL script files."""
+
     # Connect to the SQLite database
     conn = db.open_connection()
     cursor = conn.cursor()

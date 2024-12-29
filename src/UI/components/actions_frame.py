@@ -11,6 +11,42 @@ if TYPE_CHECKING:
 
 
 class ActionsFrame(ttk.LabelFrame):
+    """
+    A class representing the actions frame for the Movie Recommendation System.
+
+    Attributes:
+    -----------
+    app : App
+        The main application instance.
+    button_new_movie : ttk.Button
+        Button to add a new movie.
+    button_new_director : ttk.Button
+        Button to add a new director.
+    button_new_rate : ttk.Button
+        Button to rate a movie.
+
+    Methods:
+    --------
+    __init__(parent: ttk.Frame, app: App):
+        Initializes the actions frame with the given parent and app.
+    create_widgets():
+        Creates and arranges the widgets in the actions frame.
+    disable():
+        Disables all buttons in the actions frame.
+    __new_director_process():
+        Initiates the process to add a new director.
+    __on_new_director_destroy():
+        Callback function to handle the destruction of the new director window.
+    __new_movie_process():
+        Initiates the process to add a new movie.
+    __on_new_movie_destroy():
+        Callback function to handle the destruction of the new movie window.
+    __new_rate_process():
+        Initiates the process to rate a movie.
+    __on_new_rate_destroy():
+        Callback function to handle the destruction of the new rate window.
+    """
+
     def __init__(self, parent: ttk.Frame, app: App):
         super().__init__(
             parent,
@@ -27,6 +63,8 @@ class ActionsFrame(ttk.LabelFrame):
         self.create_widgets()
 
     def create_widgets(self):
+        """Create and arrange the widgets in the actions frame."""
+
         self.button_new_movie = ttk.Button(
             self,
             text='Ajouter un film',
@@ -62,33 +100,47 @@ class ActionsFrame(ttk.LabelFrame):
         )
 
     def disable(self):
+        """Disables all buttons in the actions frame."""
+
         self.button_new_movie['state'] = 'disable'
         self.button_new_director['state'] = 'disable'
         self.button_new_rate['state'] = 'disable'
 
     def __new_director_process(self):
+        """Initiates the process to add a new director."""
+
         self.app.disable()
         self.new_director = NewDirector(self.app, self.__on_new_director_destroy)
         self.app.wait_window(self.new_director)
 
     def __on_new_director_destroy(self):
+        """Callback function to handle the destruction of the new director window."""
+
         self.app.create_widgets()
         self.app.refresh_movies()
 
     def __new_movie_process(self):
+        """Initiates the process to add a new movie."""
+
         self.app.disable()
         self.new_movie = NewMovie(self.app, self.__on_new_movie_destroy)
         self.app.wait_window(self.new_movie)
 
     def __on_new_movie_destroy(self):
+        """Callback function to handle the destruction of the new movie window."""
+
         self.app.create_widgets()
         self.app.refresh_movies()
 
     def __new_rate_process(self):
+        """Initiates the process to rate a movie."""
+
         self.app.disable()
         self.new_rate = NewRate(self.app, self.__on_new_rate_destroy)
         self.app.wait_window(self.new_rate)
 
     def __on_new_rate_destroy(self):
+        """Callback function to handle the destruction of the new rate window."""
+
         self.app.create_widgets()
         self.app.refresh_movies()

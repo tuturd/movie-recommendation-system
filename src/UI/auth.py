@@ -55,6 +55,8 @@ class Auth(tk.Tk):
         self.create_widgets()
 
     def create_widgets(self):
+        """Create and arrange the widgets in the authentication window."""
+
         self.label_title = ttk.Label(
             self,
             text='Portail de connexion'
@@ -144,6 +146,8 @@ class Auth(tk.Tk):
         )
 
     def on_submit(self, e=None):
+        """Handles the event when the user submits the username."""
+
         user_input = self.entry.get()
         logger.debug(f'Username input: {user_input}')
 
@@ -165,11 +169,17 @@ class Auth(tk.Tk):
             self.create_widgets()
 
     def on_admin_interface_destroy(self):
+        """Handles the event when the admin interface is destroyed."""
+
         pass
 
     def signin_process(self):
+        """Handles the event when the user clicks on the 'Créer un compte' button."""
+
         logger.debug('Signin process not inplemented')
 
     def close(self):
+        """Closes the authentication window and calls the on_destroy callback."""
+
         self.destroy()
         self.on_destroy()

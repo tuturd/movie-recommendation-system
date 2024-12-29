@@ -2,6 +2,38 @@ import ctypes
 
 
 class User(ctypes.Structure):
+    """
+    A class to represent a User with attributes for both Python and C compatibility.
+
+    Attributes:
+    -----------
+    id : int
+        The user's ID.
+    username : str
+        The user's username.
+    firstname : str
+        The user's first name.
+    lastname : str
+        The user's last name.
+    birth_date : int
+        The user's birth date as an integer.
+    cid : int
+        The user's ID in C structure.
+    cusername : bytes
+        The user's username in C structure.
+    cfirstname : bytes
+        The user's first name in C structure.
+    clastname : bytes
+        The user's last name in C structure.
+    cbirth_date : int
+        The user's birth date in C structure.
+
+    Methods:
+    --------
+    convert() -> None
+        Converts C structure attributes to Python attributes.
+    """
+
     def __init__(self, *args, **kw):
         super().__init__(*args, **kw)
 
@@ -18,6 +50,8 @@ class User(ctypes.Structure):
         self.cbirth_date: int = 0
 
     def convert(self) -> None:
+        """Convert C structure attributes to Python attributes"""
+
         self.id = int(self.cid)
         self.username = self.cusername.decode('utf-8')
         self.firstname = self.cfirstname.decode('utf-8')

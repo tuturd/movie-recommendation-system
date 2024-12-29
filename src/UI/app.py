@@ -16,6 +16,62 @@ logger = get_logger(__name__)
 
 
 class App(tk.Tk):
+    """
+    A class representing the main application window for the Movie Recommendation System.
+
+    Attributes:
+    -----------
+    auth_number : int
+        A counter for the number of authentication attempts.
+    auth : Auth
+        The authentication process instance.
+    filter_frame_open : bool
+        A flag indicating whether the filter frame is open.
+    label_title : ttk.Label
+        The label displaying the welcome message.
+    button_logout : ttk.Button
+        The button for logging out.
+    button_profile : ttk.Button
+        The button for accessing the user profile.
+    frame_actions : ActionsFrame
+        The frame containing action buttons.
+    frame_criteria : CriteriaFrame
+        The frame containing criteria selection widgets.
+    frame_filter : FilterFrame
+        The frame for filtering movie recommendations.
+    frame_category : CategoryContainerFrame
+        The frame displaying movie categories.
+    user : UserUtils.User
+        The authenticated user instance.
+    _jaccard_result : list[JaccardUtils.ResultatSimilarite]
+        The list of Jaccard similarity results.
+
+    Methods:
+    --------
+    __init__(**kwargs):
+        Initializes the main application window with optional keyword arguments.
+    create_widgets():
+        Creates and arranges the widgets in the main application window.
+    disable():
+        Disables interactive widgets in the main application window.
+    restart_auth_process() -> None:
+        Restarts the authentication process.
+    auth_process() -> Auth:
+        Initiates the authentication process.
+    on_auth_destroy():
+        Callback function to handle actions after authentication is destroyed.
+    profile_process() -> Profile:
+        Initiates the profile process.
+    on_profile_destroy():
+        Callback function to handle actions after the profile process is destroyed.
+    open_filter_frame():
+        Opens the filter frame.
+    close_filter_frame():
+        Closes the filter frame.
+    refresh_movies():
+        Refreshes the movie recommendations based on Jaccard similarity results.
+    """
+
     def __init__(self, **kwargs):
         super().__init__()
         self.title('Movie Recommendation System')
@@ -34,6 +90,8 @@ class App(tk.Tk):
         self._jaccard_result: list[JaccardUtils.ResultatSimilarite] = []
 
     def create_widgets(self):
+        """Create and arrange the widgets in the main application window."""
+
         self.label_title = ttk.Label(
             self,
             text=f'Bienvenue sur le système de recommendation, {self.auth.username} !',
@@ -98,6 +156,8 @@ class App(tk.Tk):
         self.frame_category = CategoryContainerFrame(self)
 
     def disable(self):
+        """Disables interactive widgets in the main application window."""
+
         self.button_profile['state'] = 'disable'
         self.button_logout['state'] = 'disable'
         self.frame_actions.disable()
@@ -105,9 +165,13 @@ class App(tk.Tk):
         self.frame_category.disable()
 
     def restart_auth_process(self) -> None:
+        """Restarts the authentication process."""
+
         self.auth = self.auth_process()
 
     def auth_process(self) -> Auth:
+        """Initiates the authentication process."""
+
         self.withdraw()
         try:
             self.frame_category.destroy()
@@ -117,28 +181,40 @@ class App(tk.Tk):
         return Auth(self.on_auth_destroy, self.auth_number)
 
     def on_auth_destroy(self):
+        """Callback function to handle actions after authentication is destroyed."""
+
         self.user = UserUtils.get(self.auth.username)
         self.create_widgets()
         self.refresh_movies()
         self.deiconify()
 
     def profile_process(self) -> Profile:
+        """Initiates the profile process"""
+
         self.disable()
         return Profile(self, self.on_profile_destroy)
 
     def on_profile_destroy(self):
+        """Callback function to handle actions after the profile process is destroyed."""
+
         self.create_widgets()
         self.refresh_movies()
 
     def open_filter_frame(self):
+        """Opens the filter frame."""
+
         self.disable()
         self.frame_filter = FilterFrame(self.frame_container, self)
 
     def close_filter_frame(self):
+        """Closes the filter frame."""
+
         self.frame_filter.destroy()
         self.frame_filter = None
 
     def refresh_movies(self):
+        """Refreshes the movie recommendations based on Jaccard similarity results."""
+
         self._jaccard_result = JaccardUtils.similarites(self.user.id)
         logger.debug(f'jaccard result: {[r.similarite for r in self._jaccard_result]}')
 
@@ -180,8 +256,3 @@ class App(tk.Tk):
         ]
         self.frame_category.display_movies_by_genre = display_movies_by_genre
         self.frame_category.create_widgets()
-
-
-if __name__ == '__main__':
-    app = App()
-    app.mainloop()

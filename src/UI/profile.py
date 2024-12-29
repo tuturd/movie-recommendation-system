@@ -13,6 +13,27 @@ logger = get_logger(__name__)
 
 
 class Profile(tk.Toplevel):
+    """
+    A class to represent the user profile window in the Movie Recommendation System UI.
+
+    Attributes:
+    -----------
+    parent : App
+        The parent application instance.
+    on_destroy : function
+        The callback function to be called when the profile window is closed.
+    profile : UserProfile
+        The user profile data retrieved from the system.
+
+    Methods:
+    --------
+    __init__(parent: App, on_destroy):
+        Initializes the profile window with the given parent and on_destroy callback.
+    create_widgets():
+        Creates and arranges the widgets in the profile window.
+    close():
+        Closes the profile window and calls the on_destroy callback.
+    """
 
     def __init__(self, parent: App, on_destroy):
         super().__init__(parent)
@@ -24,6 +45,8 @@ class Profile(tk.Toplevel):
         self.create_widgets()
 
     def create_widgets(self):
+        """Create and arrange the widgets in the profile window."""
+
         self.label_name = ttk.Label(
             self,
             text=f'{self.parent.user.firstname} {self.parent.user.lastname}'
@@ -70,5 +93,7 @@ class Profile(tk.Toplevel):
         )
 
     def close(self):
+        """Close the profile window and call the on_destroy callback."""
+
         self.destroy()
         self.on_destroy()

@@ -4,12 +4,37 @@ from src.classes.user_movie import UserMovie
 
 
 class UserMovieError(Exception):
+    """
+    Exception raised for errors related to user-movie interactions.
+
+    Parameters:
+    -----------
+    error : str
+        The error code or identifier.
+    message : str
+        A detailed description of the error.
+    """
+
     def __init__(self, error: str, message: str):
         self.message = message
         super().__init__(error)
 
 
 def insert(user_movie: UserMovie) -> None:
+    """
+    Inserts a UserMovie record into the database.
+
+    Parameters:
+    -----------
+    user_movie : UserMovie
+        An instance of UserMovie containing the details to be inserted.
+
+    Raises
+    -------
+    UserMovieError
+        If there is an operational error during the insertion process.
+    """
+
     conn = db.open_connection()
     cursor = conn.cursor()
 
