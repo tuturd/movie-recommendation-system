@@ -16,8 +16,8 @@ def build() -> None:
         source_files = [
             f'{extension.extension_name}/{extension.sources_name}.c',
             f'{extension.extension_name}/{extension.sources_name}.h',
-            f'{extension.extension_name}/sqlite3.c',
-            f'{extension.extension_name}/sqlite3.h',
+            'sqlite3/sqlite3.c',
+            'sqlite3/sqlite3.h',
         ]
 
         if os.name == 'nt':
