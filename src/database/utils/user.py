@@ -1,20 +1,23 @@
 from src.c_extension.utils.extension import LIB_FILE_EXTENSION
-from src.c_extension.utils.builder_from_app import build
+from src.c_extension.utils.builder_from_app import build as extensions_build
 from src.database.config import DB_PATH
 from src.classes.user import User
 from src.classes.user_profile import UserProfile
+from src.utils.logging import get_logger
 import ctypes
 from pathlib import Path
+
+logger = get_logger(__name__)
 
 # Load the shared library
 libuser_path = Path(__file__).parent.parent.parent / f'c_extension/lib/user.{LIB_FILE_EXTENSION}'
 try:
     libuser = ctypes.CDLL(str(libuser_path))
 except OSError as e:
-    print(f"Error loading the shared library: {e}\nLaunching the builder script...")
-    build()
+    logger.warning(f'Error loading the shared library: {e}')
+    extensions_build()
     libuser = ctypes.CDLL(str(libuser_path))
-    print('Build completed. Launching the app.')
+    logger.info('Launching the app...')
 
 # Define the return types and argument types for the functions in the shared library
 libuser.get.argtypes = (ctypes.POINTER(ctypes.c_char), ctypes.POINTER(ctypes.c_char))
