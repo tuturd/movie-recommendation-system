@@ -1,5 +1,5 @@
 import sys
-from utils.builder import build
+from utils.builder_from_cli import build
 from utils.reset import reset
 
 if __name__ == '__main__':
