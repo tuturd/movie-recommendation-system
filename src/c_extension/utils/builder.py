@@ -22,7 +22,7 @@ def build() -> None:
 
         if os.name == 'nt':
             win_output_file = output_dir / f'{extension.extension_name}.dll'
-            win_compile_command = f"gcc -shared -o {win_output_file} {' '.join(source_files)}"
+            win_compile_command = f"gcc -shared -o {win_output_file} {' '.join(source_files)} -fPIC"
             os.system(win_compile_command)
 
         else:
