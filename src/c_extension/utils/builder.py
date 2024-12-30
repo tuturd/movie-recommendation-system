@@ -16,14 +16,19 @@ def build() -> None:
         source_files = [
             f'{extension.extension_name}/{extension.sources_name}.c',
             f'{extension.extension_name}/{extension.sources_name}.h',
+            f'{extension.extension_name}/sqlite3.c',
+            f'{extension.extension_name}/sqlite3.h',
         ]
-        linux_output_file = output_dir / f'{extension.extension_name}.so'
-        linux_compile_command = f"gcc -shared -o {linux_output_file} {' '.join(source_files)} -I/usr/include -L/usr/lib -lsqlite3 -fPIC"
-        os.system(linux_compile_command)
 
-        win_output_file = output_dir / f'{extension.extension_name}.dll'
-        win_compile_command = f"gcc -shared -o {win_output_file} {' '.join(source_files)} -I/usr/include -L/usr/lib -lsqlite3 -fPIC"
-        os.system(win_compile_command)
+        if os.name == 'nt':
+            win_output_file = output_dir / f'{extension.extension_name}.dll'
+            win_compile_command = f"gcc -shared -o {win_output_file} {' '.join(source_files)}"
+            os.system(win_compile_command)
+
+        else:
+            linux_output_file = output_dir / f'{extension.extension_name}.so'
+            linux_compile_command = f"gcc -shared -o {linux_output_file} {' '.join(source_files)} -I/usr/include -L/usr/lib -lsqlite3 -fPIC"
+            os.system(linux_compile_command)
 
 
 if __name__ == '__main__':
