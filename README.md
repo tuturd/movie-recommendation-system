@@ -123,20 +123,24 @@ Lien vers la documentation : [ici](https://docs.python.org/3/library/ctypes.html
 Le code C est compilé en extensions Python .so et .dll via le compilateur [gcc](https://www.gnu.org/).
 Installation:
 - Sur Linux : `sudo apt-get install gcc`
+- Sur Windows : disponible sur le site officiel [MinGW-w64](http://mingw-w64.org/doku.php/download). Il s'agit d'une version compatible Windows de GCC.
 
-En fonction du système d'exploitation utilisé lors de l'utilisation de l'application, l'extension adéquate sera automatiquement utilisée (.so sur noyau Linux, .dll sous Windows). Il en va de même pour la compilation du code.
+En fonction du système d'exploitation utilisé lors du lancement de l'application, l'extension adéquate sera automatiquement utilisée (.so sur noyau Linux, .dll sous Windows). Il en va de même pour la compilation du code.
 
-> [!WARNING]  
-> Cette fonction n'est utilisable que sous Linux pour l'instant
+> [!TIP]
+> Lors de l'exécution de l'application, les librairies sont compilées automatiquement, si elles n'existent pas encore.
 
-Se déplacer dans [src/c_extension](src/c_extension)
+**Compilation manuelle:**
+
+> [!NOTE]
+> Se déplacer dans [src/c_extension](src/c_extension)
 
 Un script de génération automatique peut être lancé via la commande suivante:
 `python extension.py build`
 
 ### Remise à zéro
 
-> [!INFO]  
+> [!NOTE]  
 > Se déplacer dans [src/c_extension](src/c_extension)
 
 Pour supprimer les librairies, fichiers de builds et dossiers d'anciennes compilation du code C, entrer la commande suivante:
