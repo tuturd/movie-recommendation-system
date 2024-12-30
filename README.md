@@ -93,21 +93,8 @@ Utilisation du module `sqlite3` installée par défaut sur Python.
 Lien vers la documentation : [ici](https://www.sqlite.org/docs.html)
 
 Installation pour C
-- Sur Linux : 
-```
-sudo apt-get install libsqlite3-dev
-
-# Téléchargez les fichiers
-wget https://www.sqlite.org/2023/sqlite-dll-win64-x64-3400100.zip
-wget https://www.sqlite.org/2023/sqlite-tools-win32-x86-3400100.zip
-
-# Créez le répertoire pour MinGW
-sudo mkdir -p /usr/local/mingw
-
-# Extrayez les fichiers dans le répertoire MinGW
-sudo unzip sqlite-dll-win64-x64-3400100.zip -d /usr/local/mingw
-sudo unzip sqlite-tools-win32-x86-3400100.zip -d /usr/local/mingw
-```
+- Sur Linux : `sudo apt-get install libsqlite3-dev`
+- Sur Windows : Pas d'installation nécessaire, la librairie est directement dans [src/c_extension/sqlite3](src/c_extension/sqlite3)
 
 ### Seeding
 Se déplacer dans [src/database](src/database)
@@ -133,15 +120,11 @@ Lien vers la documentation : [ici](https://docs.python.org/3/library/ctypes.html
 
 ### Compilation
 
-Le code C est compilé en extensions Python .so  via le compilateur [gcc](https://www.gnu.org/).
+Le code C est compilé en extensions Python .so et .dll via le compilateur [gcc](https://www.gnu.org/).
 Installation:
 - Sur Linux : `sudo apt-get install gcc`
 
-Le code C est compilé en extensions Python .dll via le compilateur [mingw-w64](https://www.mingw-w64.org/).
-Installation:
-- Sur Linux : `sudo apt-get install mingw-w64`
-
-En fonction du système d'exploitation utilisé lors de l'utilisation de l'application, l'extension adéquate sera automatiquement utilisée (.so sur noyau Linux, .dll sous Windows).
+En fonction du système d'exploitation utilisé lors de l'utilisation de l'application, l'extension adéquate sera automatiquement utilisée (.so sur noyau Linux, .dll sous Windows). Il en va de même pour la compilation du code.
 
 > [!WARNING]  
 > Cette fonction n'est utilisable que sous Linux pour l'instant
