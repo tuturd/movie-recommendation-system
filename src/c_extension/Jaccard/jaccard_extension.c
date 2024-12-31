@@ -8,6 +8,22 @@ typedef struct {
     float similarite; // Résultat de la similarité de Jaccard
 } ResultatSimilarite;
 
+/**
+ * @brief Calcule la similarité de Jaccard entre deux utilisateurs.
+ * 
+ * La similarité de Jaccard mesure la similarité entre les ensembles de films regardés
+ * par deux utilisateurs en calculant le rapport entre l'intersection et l'union de ces ensembles.
+ * 
+ * @param db Pointeur vers la base de données SQLite ouverte.
+ * @param user1_id ID du premier utilisateur.
+ * @param user2_id ID du second utilisateur.
+ * @return float Retourne la valeur de la similarité de Jaccard entre les deux utilisateurs.
+ * 
+ * @example
+ * float score = calculer_jaccard(db, 1, 2);
+ * printf("La similarité est : %.2f", score);
+ */
+
 // Fonction pour calculer la similarité de Jaccard entre deux utilisateurs
 float calculer_jaccard(sqlite3 *db, int user1_id, int user2_id) {
     sqlite3_stmt *stmt;
@@ -55,6 +71,23 @@ float calculer_jaccard(sqlite3 *db, int user1_id, int user2_id) {
     }
     return (float)intersection / union_taille;
 }
+
+/**
+ * @brief Calcule la similarité de Jaccard pour un utilisateur cible avec tous les autres utilisateurs.
+ * 
+ * Cette fonction parcourt tous les utilisateurs de la base de données, calcule leur similarité 
+ * avec l'utilisateur cible et retourne un tableau dynamique contenant les résultats.
+ * 
+ * @param db_directory Chemin vers le fichier de la base de données SQLite.
+ * @param target_user_id ID de l'utilisateur cible.
+ * @return ResultatSimilarite* Retourne un pointeur vers un tableau dynamique contenant les résultats.
+ * 
+ * @example
+ * ResultatSimilarite* result = calculer_similarites_pour_utilisateur("films.db", 1);
+ * for (int i = 0; result[i].user_id != -1; i++) {
+ *     printf("Utilisateur %d : Similarité = %.2f\n", result[i].user_id, result[i].similarite);
+ * }
+ */
 
 // Fonction pour calculer les similarités pour un utilisateur donné
 ResultatSimilarite* calculer_similarites_pour_utilisateur(char *db_directory, int target_user_id) {
@@ -105,6 +138,17 @@ ResultatSimilarite* calculer_similarites_pour_utilisateur(char *db_directory, in
     return results;
 }
 
+/**
+ * @brief Programme principal pour tester le calcul de similarité de Jaccard.
+ * 
+ * Cette fonction ouvre une connexion à la base de données SQLite,
+ * calcule les similarités pour un utilisateur cible et affiche les résultats.
+ * 
+ * @return int Retourne 0 si le programme s'exécute correctement.
+ * 
+ * @example
+ * ./programme_similarite
+ */
 
 
 int main() {
