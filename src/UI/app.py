@@ -1,10 +1,11 @@
 import tkinter as tk
-from tkinter import ttk
+from tkinter import ttk, messagebox
 
 from src.classes.user_movie import UserMovie
 from src.database.utils import jaccard as JaccardUtils
 from src.database.utils import movie as MovieUtils
 from src.database.utils import user as UserUtils
+from src.database.utils import user_movie as UserMovieUtils
 from src.UI.auth import Auth
 from src.UI.components.actions_frame import ActionsFrame
 from src.UI.components.category_container_frame import CategoryContainerFrame
@@ -193,6 +194,13 @@ class App(tk.Tk):
         """Initiates the profile process"""
 
         self.disable()
+
+        if UserMovieUtils.get_len(self.user.id) < 3:
+            messagebox.showwarning('Profil', 'Vous devez noter au moins 3 films pour pouvoir accéder à votre profil.')
+            self.create_widgets()
+            self.refresh_movies()
+            return
+
         return Profile(self, self.on_profile_destroy)
 
     def on_profile_destroy(self):
