@@ -1,8 +1,9 @@
-from src.c_extension.utils.extension import LIB_FILE_EXTENSION
-from src.database.config import DB_PATH
-from src.classes.jaccard import ResultatSimilarite
 import ctypes
 from pathlib import Path
+
+from src.c_extension.utils.extension import LIB_FILE_EXTENSION
+from src.classes.jaccard import ResultatSimilarite
+from src.database.config import DB_PATH
 
 # Load the shared library
 libjaccard_path = Path(__file__).parent.parent.parent / f'c_extension/lib/Jaccard.{LIB_FILE_EXTENSION}'

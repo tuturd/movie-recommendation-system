@@ -1,6 +1,8 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 import sqlite3
+from typing import TYPE_CHECKING
+
 import src.database.utils.connection as db
 from src.classes.movie import Movie, MovieTitleAndDirector
 from src.classes.user import User

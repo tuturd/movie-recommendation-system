@@ -1,5 +1,5 @@
-from pathlib import Path
 import json
+from pathlib import Path
 
 settings_file = Path(__file__).resolve().parent.joinpath('settings.json')
 

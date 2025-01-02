@@ -1,14 +1,15 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 import tkinter as tk
 from tkinter import ttk
+from typing import TYPE_CHECKING
+
 from src.UI.new_rate import NewRate
 
-
 if TYPE_CHECKING:
-    from src.UI.components.category_frame import CategoryFrame
     from src.classes.user_movie import UserMovie
     from src.UI.app import App
+    from src.UI.components.category_frame import CategoryFrame
 
 
 class MovieFrame(ttk.Frame):

@@ -1,4 +1,5 @@
 import logging
+
 from colorama import Fore, Style
 
 CONSOLE_LOG_FORMAT = '%(asctime)s %(levelname)s %(name)s %(message)s'

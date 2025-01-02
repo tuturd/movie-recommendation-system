@@ -1,5 +1,5 @@
 import src.database.utils.connection as db
-from src.database.config import SEED_PATH, EXAMPLE_DATA_TABLES
+from src.database.config import EXAMPLE_DATA_TABLES, SEED_PATH
 
 
 def import_example_data():

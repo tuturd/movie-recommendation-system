@@ -1,4 +1,5 @@
 import ctypes
+
 from src.classes.director import Director
 from src.classes.genre import Genre
 from src.classes.user_movie import MinimizedUserMovie

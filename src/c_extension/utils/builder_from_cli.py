@@ -1,7 +1,7 @@
 import os
-from utils.settings import Settings
 from pathlib import Path
 
+from utils.settings import Settings
 
 settings = Settings()
 

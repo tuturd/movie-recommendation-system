@@ -1,11 +1,13 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 from tkinter import ttk
+from typing import TYPE_CHECKING
+
 from src.UI.components.category_frame import CategoryFrame
 
 if TYPE_CHECKING:
+    from src.classes.user_movie import UserMovie
     from src.UI.app import App
-    from src.database.utils.user_movie import UserMovie
 
 
 class CategoryContainerFrame(ttk.Frame):

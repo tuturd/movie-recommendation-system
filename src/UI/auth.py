@@ -1,10 +1,10 @@
 import tkinter as tk
-import src.database.utils.auth as auth
 from tkinter import ttk
+
+import src.database.utils.auth as auth
+from src.UI.interface import AdminInterface
 from src.utils.logging import get_logger
 from src.utils.start import starting_sequence
-from src.UI.interface import AdminInterface
-
 
 logger = get_logger(__name__)
 

@@ -2,8 +2,8 @@ import tkinter as tk
 from tkinter import messagebox, ttk
 
 import src.database.utils.director as DirectorUtils
-import src.database.utils.movie as MovieUtils
 import src.database.utils.genre as GenreUtils
+import src.database.utils.movie as MovieUtils
 from src.classes.movie import Movie
 from src.utils.logging import get_logger
 

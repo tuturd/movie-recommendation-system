@@ -1,5 +1,6 @@
 import sqlite3
-from config import DB_PATH, SEED_PATH, EXAMPLE_DATA_TABLES
+
+from config import DB_PATH, EXAMPLE_DATA_TABLES, SEED_PATH
 
 
 def import_example_data():

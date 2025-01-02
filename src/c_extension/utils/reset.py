@@ -1,5 +1,6 @@
-from .settings import Settings
 from pathlib import Path
+
+from .settings import Settings
 
 settings = Settings()
 

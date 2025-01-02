@@ -1,16 +1,17 @@
 import tkinter as tk
 from tkinter import ttk
-from src.UI.auth import Auth
-from src.UI.profile import Profile
-from src.UI.components.actions_frame import ActionsFrame
-from src.UI.components.criteria_frame import CriteriaFrame
-from src.UI.components.filter_frame import FilterFrame
-from src.UI.components.category_container_frame import CategoryContainerFrame
-from src.utils.logging import get_logger
-from src.database.utils import user as UserUtils
+
+from src.classes.user_movie import UserMovie
 from src.database.utils import jaccard as JaccardUtils
 from src.database.utils import movie as MovieUtils
-from src.classes.user_movie import UserMovie
+from src.database.utils import user as UserUtils
+from src.UI.auth import Auth
+from src.UI.components.actions_frame import ActionsFrame
+from src.UI.components.category_container_frame import CategoryContainerFrame
+from src.UI.components.criteria_frame import CriteriaFrame
+from src.UI.components.filter_frame import FilterFrame
+from src.UI.profile import Profile
+from src.utils.logging import get_logger
 
 logger = get_logger(__name__)
 

@@ -1,7 +1,9 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 import tkinter as tk
 from tkinter import ttk
+from typing import TYPE_CHECKING
+
 from src.UI.new_director import NewDirector
 from src.UI.new_movie import NewMovie
 from src.UI.new_rate import NewRate
