@@ -12,8 +12,12 @@ class Movie:
         The release year of the movie.
     genre : str
         The genre of the movie.
+    genre_id : int
+        The unique identifier for the genre.
     director : str
         The director of the movie.
+    director_id : int
+        The unique identifier for the director.
     price : int
         The price of the movie.
 
@@ -28,7 +32,9 @@ class Movie:
         self.title: str = kwargs.get('title', None)
         self.release_date: int = kwargs.get('release_date', None)
         self.genre: str = kwargs.get('genre', None)
+        self.genre_id: int = kwargs.get('genre_id', None)
         self.director: str = kwargs.get('director', None)
+        self.director_id: int = kwargs.get('director_id', None)
         self.price: int = kwargs.get('price', None)
 
 

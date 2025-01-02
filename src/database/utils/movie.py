@@ -3,8 +3,8 @@ from typing import TYPE_CHECKING
 import sqlite3
 import src.database.utils.connection as db
 from src.classes.movie import Movie, MovieTitleAndDirector
-from src.database.utils.user import User
-from src.database.utils.user_movie import UserMovie
+from src.classes.user import User
+from src.classes.user_movie import UserMovie
 
 if TYPE_CHECKING:
     from src.database.utils.jaccard import ResultatSimilarite
@@ -26,6 +26,45 @@ class MovieError(Exception):
     def __init__(self, error: str, message: str):
         self.message = message
         super().__init__(error)
+
+
+def insert(movie: Movie) -> None:
+    """
+    Insert a new movie into the database.
+
+    Parameters:
+    -----------
+    movie : Movie
+        The movie object containing the details of the movie to be inserted.
+
+    Raises:
+    -------
+    MovieError
+        If there is an operational error during the insertion process.
+    """
+
+    conn = db.open_connection()
+    cursor = conn.cursor()
+
+    try:
+        cursor.execute(
+            """
+                INSERT INTO movie(title, releaseDate, price, directorId, genreId)
+                VALUES (?, ?, ?, ?, ?);
+            """,
+            (
+                movie.title,
+                movie.release_date,
+                movie.price,
+                movie.director_id,
+                movie.genre_id,
+            )
+        )
+
+        conn.commit_and_close()
+
+    except sqlite3.OperationalError as e:
+        raise MovieError(e, 'Erreur lors de la création du film')
 
 
 def get(id: int) -> Movie:
