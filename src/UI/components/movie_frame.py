@@ -154,6 +154,7 @@ class MovieFrame(ttk.Frame):
         """Callback function to handle the destruction of the rating window."""
 
         self._app.create_widgets()
+        self._app.refresh_movies()
 
     def disable(self) -> None:
         """Disables the rate button."""

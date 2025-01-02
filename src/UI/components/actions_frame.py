@@ -119,6 +119,7 @@ class ActionsFrame(ttk.LabelFrame):
         self.button_new_movie['state'] = 'disable'
         self.button_new_director['state'] = 'disable'
         self.button_new_rate['state'] = 'disable'
+        self.button_catalog['state'] = 'disable'
 
     def __new_director_process(self):
         """Initiates the process to add a new director."""

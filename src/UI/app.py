@@ -155,6 +155,8 @@ class App(tk.Tk):
             padx=20
         )
 
+        if self.frame_category:
+            self.frame_category.destroy()
         self.frame_category = CategoryContainerFrame(self)
 
     def disable(self):
@@ -263,5 +265,7 @@ class App(tk.Tk):
             ]
             for genre in sorted(genre_dict.keys())
         ]
-        self.frame_category.display_movies_by_category = display_movies_by_category
-        self.frame_category.create_widgets()
+
+        if len(display_movies_by_category) > 0:
+            self.frame_category.display_movies_by_category = display_movies_by_category
+            self.frame_category.create_widgets()
