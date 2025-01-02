@@ -4,9 +4,10 @@ from tkinter import ttk
 from typing import TYPE_CHECKING
 
 from src.UI.components.movie_frame import MovieFrame
+from src.classes.user_movie import UserMovie
+from src.classes.movie import Movie
 
 if TYPE_CHECKING:
-    from src.classes.user_movie import UserMovie
     from src.UI.app import App
     from src.UI.components.category_container_frame import CategoryContainerFrame
 
@@ -38,7 +39,7 @@ class CategoryFrame(ttk.Frame):
         Disables all movie frames within the category frame.
     """
 
-    def __init__(self, parent: CategoryContainerFrame, app: App, title: str, user_movies: list[UserMovie]):
+    def __init__(self, parent: CategoryContainerFrame, app: App, title: str, user_movies: list[UserMovie] | list[Movie]):
         super().__init__(parent)
         self.pack(
             padx=5,
@@ -55,20 +56,22 @@ class CategoryFrame(ttk.Frame):
     def create_widgets(self):
         """Create and arrange the widgets in the category frame."""
 
-        self.label_title = ttk.Label(
-            self,
-            text=self.title,
-        )
-        self.label_title.grid(
-            row=0,
-            column=0,
-            padx=5,
-            columnspan=len(self.user_movies),
-            sticky='w'
-        )
+        if isinstance(self.user_movies, UserMovie):
 
-        self.separator = ttk.Separator(self, orient='horizontal')
-        self.separator.grid(row=1, column=0, columnspan=len(self.user_movies), sticky='ew', pady=(0, 5))
+            self.label_title = ttk.Label(
+                self,
+                text=self.title,
+            )
+            self.label_title.grid(
+                row=0,
+                column=0,
+                padx=5,
+                columnspan=len(self.user_movies),
+                sticky='w'
+            )
+
+            self.separator = ttk.Separator(self, orient='horizontal')
+            self.separator.grid(row=1, column=0, columnspan=len(self.user_movies), sticky='ew', pady=(0, 5))
 
         for i, user_movie in enumerate(self.user_movies):
             self.movie_frames.append(

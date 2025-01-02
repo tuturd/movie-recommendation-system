@@ -3,11 +3,11 @@ from __future__ import annotations
 import tkinter as tk
 from tkinter import ttk
 from typing import TYPE_CHECKING
-
+from src.classes.movie import Movie
+from src.classes.user_movie import UserMovie
 from src.UI.new_rate import NewRate
 
 if TYPE_CHECKING:
-    from src.classes.user_movie import UserMovie
     from src.UI.app import App
     from src.UI.components.category_frame import CategoryFrame
 
@@ -49,7 +49,7 @@ class MovieFrame(ttk.Frame):
         Disables the rate button.
     """
 
-    def __init__(self, parent: CategoryFrame, app: App, user_movie: UserMovie, **kwargs):
+    def __init__(self, parent: CategoryFrame, app: App, user_movie: UserMovie | Movie, **kwargs):
         super().__init__(
             parent,
             borderwidth=2,
@@ -70,9 +70,20 @@ class MovieFrame(ttk.Frame):
     def create_widgets(self):
         """Create and arrange the widgets in the movie frame."""
 
+        if isinstance(self.user_movie, UserMovie):
+            movie_title = self.user_movie.movie.title
+            movie_director = self.user_movie.movie.director
+            movie_rate = f'Note moyenne : {self.user_movie.rating}/5'
+            movie_date_and_price = f'{self.user_movie.movie.release_date} - {self.user_movie.movie.price / 100}€'
+
+        else:
+            movie_title = self.user_movie.title
+            movie_director = self.user_movie.director
+            movie_date_and_price = f'{self.user_movie.release_date} - {self.user_movie.price / 100}€'
+
         self.label_title = ttk.Label(
             self,
-            text=f'{self.user_movie.movie.title}',
+            text=movie_title,
             anchor=tk.W,
             justify=tk.LEFT
         )
@@ -84,7 +95,7 @@ class MovieFrame(ttk.Frame):
 
         self.label_director = ttk.Label(
             self,
-            text=self.user_movie.movie.director,
+            text=movie_director,
             anchor=tk.W,
             justify=tk.LEFT
         )
@@ -94,21 +105,9 @@ class MovieFrame(ttk.Frame):
             sticky=tk.W
         )
 
-        self.label_rate = ttk.Label(
-            self,
-            text=f'Note moyenne : {self.user_movie.rating}/5',
-            anchor=tk.W,
-            justify=tk.LEFT
-        )
-        self.label_rate.grid(
-            row=2,
-            column=0,
-            sticky=tk.W
-        )
-
         self.label_date_and_price = ttk.Label(
             self,
-            text=f'{self.user_movie.movie.release_date} - {self.user_movie.movie.price}€',
+            text=movie_date_and_price,
             anchor=tk.W,
             justify=tk.LEFT
         )
@@ -118,17 +117,31 @@ class MovieFrame(ttk.Frame):
             sticky=tk.W
         )
 
-        self.button_rate = ttk.Button(
-            self,
-            text='Noter',
-            command=self.__new_rate_process
-        )
-        self.button_rate.grid(
-            row=0,
-            column=1,
-            rowspan=4,
-            padx=5
-        )
+        if isinstance(self.user_movie, UserMovie):
+
+            self.label_rate = ttk.Label(
+                self,
+                text=movie_rate,
+                anchor=tk.W,
+                justify=tk.LEFT
+            )
+            self.label_rate.grid(
+                row=2,
+                column=0,
+                sticky=tk.W
+            )
+
+            self.button_rate = ttk.Button(
+                self,
+                text='Noter',
+                command=self.__new_rate_process
+            )
+            self.button_rate.grid(
+                row=0,
+                column=1,
+                rowspan=4,
+                padx=5
+            )
 
     def __new_rate_process(self):
         """Initiate the process for rating the movie."""

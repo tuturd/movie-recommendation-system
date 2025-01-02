@@ -122,7 +122,7 @@ def get(id: int) -> Movie:
         raise MovieError(e, 'Erreur lors de la récupération du film')
 
 
-def get_all() -> list[MovieTitleAndDirector]:
+def get_all() -> list[Movie]:
     """
     Retrieves all movies along with their directors from the database.
 
@@ -130,12 +130,12 @@ def get_all() -> list[MovieTitleAndDirector]:
     --------
     get_all():
         Fetches all movies and their corresponding directors from the database.
-        Returns a list of MovieTitleAndDirector objects.
+        Returns a list of Movie objects.
 
     Returns:
     --------
-    list[MovieTitleAndDirector]
-        A list of MovieTitleAndDirector objects containing the movie ID, title, and director's full name.
+    list[Movie]
+        A list of Movie objects containing the movie details.
 
     Raises:
     -------
@@ -149,7 +149,7 @@ def get_all() -> list[MovieTitleAndDirector]:
     try:
         cursor.execute(
             """
-                SELECT movie.id, movie.title, director.firstname, director.lastname FROM movie
+                SELECT movie.id, movie.title, movie.releaseDate, movie.price, movie.genreId, movie.directorId, director.firstname, director.lastname FROM movie
                 JOIN director ON movie.directorId = director.id
             """
         )
@@ -159,10 +159,14 @@ def get_all() -> list[MovieTitleAndDirector]:
         conn.commit_and_close()
 
         return [
-            MovieTitleAndDirector(
+            Movie(
                 id=movie[0],
                 title=movie[1],
-                director=f'{movie[2]} {movie[3]}'
+                release_date=movie[2],
+                price=movie[3],
+                genre_id=movie[4],
+                director_id=movie[5],
+                director=f'{movie[6]} {movie[7]}',
             )
             for movie in data
         ]

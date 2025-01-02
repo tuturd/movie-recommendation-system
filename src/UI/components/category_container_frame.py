@@ -4,9 +4,10 @@ from tkinter import ttk
 from typing import TYPE_CHECKING
 
 from src.UI.components.category_frame import CategoryFrame
+from src.classes.user_movie import UserMovie
+from src.classes.movie import Movie
 
 if TYPE_CHECKING:
-    from src.classes.user_movie import UserMovie
     from src.UI.app import App
 
 
@@ -20,8 +21,8 @@ class CategoryContainerFrame(ttk.Frame):
         The parent application instance.
     kwargs : dict
         Additional keyword arguments.
-    display_movies_by_genre : list[list[UserMovie]]
-        A list of lists containing UserMovie instances categorized by genre.
+    display_movies_by_category : list[list[UserMovie]]
+        A list of lists containing UserMovie instances categorized.
     categories : list[CategoryFrame]
         A list of CategoryFrame instances representing different movie categories.
 
@@ -46,24 +47,40 @@ class CategoryContainerFrame(ttk.Frame):
         )
         self.parent = parent
         self.kwargs = kwargs
-        self.display_movies_by_genre: list[list[UserMovie]]
+        self.display_movies_by_category: list[list[UserMovie]] | list[list[Movie]] = []
         self.categories: list[CategoryFrame] = []
 
     def create_widgets(self):
         """Create and arrange the category frames based on the movies categorized by genre."""
 
-        self.categories = [
-            CategoryFrame(
-                self,
-                self.parent,
-                i[0].movie.genre,
-                [
-                    user_movie
-                    for user_movie in i
-                ]
-            )
-            for i in self.display_movies_by_genre
-        ]
+        if isinstance(self.display_movies_by_category[0][0], UserMovie):
+            self.categories = [
+                CategoryFrame(
+                    self,
+                    self.parent,
+                    i[0].movie.genre,
+                    [
+                        user_movie
+                        for user_movie in i
+                    ]
+                )
+                for i in self.display_movies_by_category
+            ]
+
+        elif isinstance(self.display_movies_by_category[0][0], Movie):
+            self.categories = [
+                CategoryFrame(
+                    self,
+                    self.parent,
+                    '',
+                    [
+                        movie
+                        for movie in i[j: j + 4]
+                    ]
+                )
+                for i in self.display_movies_by_category
+                for j in range(0, len(i), 4)
+            ]
 
     def disable(self) -> None:
         """Disable all category frames within the container."""

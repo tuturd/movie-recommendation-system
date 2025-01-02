@@ -7,6 +7,7 @@ from typing import TYPE_CHECKING
 from src.UI.new_director import NewDirector
 from src.UI.new_movie import NewMovie
 from src.UI.new_rate import NewRate
+from src.UI.catalog import Catalog
 
 if TYPE_CHECKING:
     from src.UI.app import App
@@ -101,6 +102,17 @@ class ActionsFrame(ttk.LabelFrame):
             padx=5
         )
 
+        self.button_catalog = ttk.Button(
+            self,
+            text='Catalogue',
+            command=self.__new_catalog_process
+        )
+        self.button_catalog.grid(
+            row=0,
+            column=3,
+            padx=5
+        )
+
     def disable(self):
         """Disables all buttons in the actions frame."""
 
@@ -130,6 +142,19 @@ class ActionsFrame(ttk.LabelFrame):
 
     def __on_new_movie_destroy(self):
         """Callback function to handle the destruction of the new movie window."""
+
+        self.app.create_widgets()
+        self.app.refresh_movies()
+
+    def __new_catalog_process(self):
+        """Initiates the process to open the catalog."""
+
+        self.app.disable()
+        self.catalog = Catalog(self.app, self.__on_catalog_destroy)
+        self.app.wait_window(self.catalog)
+
+    def __on_catalog_destroy(self):
+        """Callback function to handle the destruction of the catalog window."""
 
         self.app.create_widgets()
         self.app.refresh_movies()

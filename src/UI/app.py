@@ -256,12 +256,12 @@ class App(tk.Tk):
                 genre_dict[genre] = []
             genre_dict[genre].append(user_movie)
 
-        display_movies_by_genre: list[list[UserMovie]] = [
+        display_movies_by_category: list[list[UserMovie]] = [
             [
                 movie
                 for movie in genre_dict[genre]
             ]
             for genre in sorted(genre_dict.keys())
         ]
-        self.frame_category.display_movies_by_genre = display_movies_by_genre
+        self.frame_category.display_movies_by_category = display_movies_by_category
         self.frame_category.create_widgets()
