@@ -1,14 +1,33 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 import tkinter as tk
 from tkinter import ttk
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.UI.app import App
 
 
 class FilterFrame(ttk.LabelFrame):
-    def __init__(self, parent: App):
+    """
+    A class representing the filter frame for the Movie Recommendation System.
+
+    Attributes:
+    -----------
+    app : App
+        The main application instance.
+
+    Methods:
+    --------
+    __init__(parent: ttk.Frame, app: App):
+        Initializes the filter frame with the given parent and app instance.
+    create_widgets():
+        Creates and arranges the widgets in the filter frame.
+    on_submit():
+        Handles the submission of the filters and performs the necessary actions.
+    """
+
+    def __init__(self, parent: ttk.Frame, app: App):
         super().__init__(
             parent,
             borderwidth=2,
@@ -16,15 +35,16 @@ class FilterFrame(ttk.LabelFrame):
             text='Filtres',
         )
         self.grid(
-            row=2,
-            column=0,
-            columnspan=2,
+            row=0,
+            column=2,
             padx=5
         )
-        self.parent = parent
+        self.app = app
         self.create_widgets()
 
     def create_widgets(self):
+        """Create and arrange the widgets in the filter frame."""
+
         self.button_filter = ttk.Button(
             self,
             text='Filtres',
@@ -86,5 +106,8 @@ class FilterFrame(ttk.LabelFrame):
         )
 
     def on_submit(self):
-        self.parent.filter_frame_open = False
-        self.parent.create_widgets()
+        """Handle the submission of the filters and perform the necessary actions."""
+
+        self.app.close_filter_frame()
+        self.app.create_widgets()
+        self.app.refresh_movies()

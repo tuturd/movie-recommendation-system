@@ -1,12 +1,38 @@
 import tkinter as tk
 from tkinter import ttk
-from src.utils.logging import get_logger
 
+from src.database.utils import director as DirectorUtils
+from src.utils.logging import get_logger
 
 logger = get_logger(__name__)
 
 
 class NewDirector(tk.Toplevel):
+    """
+    A class to create a new director entry window in the Movie Recommendation System.
+
+    Attributes:
+    -----------
+    on_destroy : function
+        A callback function to be called when the window is closed.
+
+    Methods:
+    --------
+    __init__(self, parent, on_destroy):
+        Initializes the NewDirector window with the given parent and on_destroy callback.
+
+    create_widgets(self):
+        Creates and arranges the widgets in the NewDirector window.
+
+    on_submit(self, e=None):
+        Handles the submission of the new director form. Validates the input and inserts the new director into the database.
+
+    _is_well_completed(self, value: str) -> bool:
+        Checks if the given value is well-formed (contains only alphabetic characters or hyphens and is not empty).
+
+    close(self):
+        Closes the NewDirector window and calls the on_destroy callback.
+    """
 
     def __init__(self, parent, on_destroy):
         super().__init__(parent)
@@ -16,6 +42,8 @@ class NewDirector(tk.Toplevel):
         self.create_widgets()
 
     def create_widgets(self):
+        """Create and arrange the widgets in the NewDirector window."""
+
         self.label = ttk.Label(
             self,
             text="Ajout d'un producteur"
@@ -27,28 +55,49 @@ class NewDirector(tk.Toplevel):
             pady=20
         )
 
-        self.label = ttk.Label(
+        self.firstname_label = ttk.Label(
             self,
-            text='Pseudo :'
+            text='Prénom :'
         )
-        self.label.grid(
+        self.firstname_label.grid(
             row=1,
             column=0,
             padx=10,
             pady=10
         )
 
-        self.entry = ttk.Entry(
+        self.firstname_entry = ttk.Entry(
             self,
         )
-        self.entry.grid(
+        self.firstname_entry.grid(
             row=1,
             column=1,
             padx=10,
             pady=10
         )
-        self.entry.focus_set()
-        self.entry.bind('<Return>', self.on_submit)
+        self.firstname_entry.focus_set()
+
+        self.lastname_label = ttk.Label(
+            self,
+            text='Nom :'
+        )
+        self.lastname_label.grid(
+            row=2,
+            column=0,
+            padx=10,
+            pady=10
+        )
+
+        self.lastname_entry = ttk.Entry(
+            self,
+        )
+        self.lastname_entry.grid(
+            row=2,
+            column=1,
+            padx=10,
+            pady=10
+        )
+        self.lastname_entry.bind('<Return>', self.on_submit)
 
         self.button = ttk.Button(
             self,
@@ -64,10 +113,21 @@ class NewDirector(tk.Toplevel):
         )
 
     def on_submit(self, e=None):
-        user_input = self.entry.get()
-        logger.debug(f'director input: {user_input}')
-        self.close()
+        """Handles the submission of the new director form."""
+
+        firstname = self.firstname_entry.get()
+        lastname = self.lastname_entry.get()
+        if self._is_well_completed(firstname) and self._is_well_completed(lastname):
+            DirectorUtils.insert(firstname, lastname)
+            self.close()
+
+    def _is_well_completed(self, value: str) -> bool:
+        """Check if the given value is well-formed (contains only alphabetic characters or hyphens and is not empty)."""
+
+        return all(c.isalpha() or c == '-' for c in value) and value != ''
 
     def close(self):
+        """Close the NewDirector window and call the on_destroy callback."""
+
         self.destroy()
         self.on_destroy()

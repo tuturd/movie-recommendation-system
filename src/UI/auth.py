@@ -1,8 +1,10 @@
 import tkinter as tk
-import src.database.utils.auth as auth
-from tkinter import ttk
-from src.utils.logging import get_logger
+from tkinter import ttk, messagebox
 
+import src.database.utils.auth as auth
+from src.UI.interface import AdminInterface
+from src.utils.logging import get_logger
+from src.utils.start import starting_sequence
 
 logger = get_logger(__name__)
 
@@ -28,9 +30,10 @@ class Auth(tk.Tk):
         Handles the submission of the username and performs validation.
     """
 
-    def __init__(self, on_destroy):
+    def __init__(self, on_destroy, auth_number):
         super().__init__()
         self.on_destroy = on_destroy
+        self.auth_number = auth_number
         self.auth_error = ''
         self.username = ''
 
@@ -44,9 +47,16 @@ class Auth(tk.Tk):
         self.button_login: ttk.Button = None
         self.button_signin: ttk.Button = None
 
+        if self.auth_number == 1:
+            self.withdraw()
+            starting_sequence()
+            self.deiconify()
+
         self.create_widgets()
 
     def create_widgets(self):
+        """Create and arrange the widgets in the authentication window."""
+
         self.label_title = ttk.Label(
             self,
             text='Portail de connexion'
@@ -136,6 +146,8 @@ class Auth(tk.Tk):
         )
 
     def on_submit(self, e=None):
+        """Handles the event when the user submits the username."""
+
         user_input = self.entry.get()
         logger.debug(f'Username input: {user_input}')
 
@@ -146,8 +158,7 @@ class Auth(tk.Tk):
                 return
             elif user_input == 'admin':
                 self.username = user_input
-                self.auth_error = 'Page indisponible'
-                logger.debug('Administrator page not implemented')
+                self.admin_interface = AdminInterface(self, self.on_admin_interface_destroy)
             else:
                 self.auth_error = 'Utilisateur introuvable'
             self.create_widgets()
@@ -157,9 +168,21 @@ class Auth(tk.Tk):
             self.auth_error = error.message
             self.create_widgets()
 
+    def on_admin_interface_destroy(self):
+        """Handles the event when the admin interface is destroyed."""
+
+        pass
+
     def signin_process(self):
-        logger.debug('Signin process not inplemented')
+        """Handles the event when the user clicks on the 'Créer un compte' button."""
+
+        messagebox.showerror(
+            'Créer un compte',
+            'Fonctionnalité non implémentée, bouton présent à des fins de démonstration.'
+        )
 
     def close(self):
+        """Closes the authentication window and calls the on_destroy callback."""
+
         self.destroy()
         self.on_destroy()

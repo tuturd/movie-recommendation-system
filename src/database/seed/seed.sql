@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS director (
 CREATE TABLE IF NOT EXISTS movie (
     id INTEGER PRIMARY KEY,
     title VARCHAR(50) NOT NULL,
-    releaseDate TIMESTAMP NOT NULL,
+    releaseDate INT NOT NULL,
     genreId INT NOT NULL,
     directorId INT NOT NULL,
     price INT NOT NULL,
@@ -32,9 +32,11 @@ CREATE TABLE IF NOT EXISTS userMovie (
     id INTEGER PRIMARY KEY,
     userId INT NOT NULL,
     movieId INT NOT NULL,
-    rating INT NOT NULL,
+    rating INT CHECK (rating >= 0 AND rating <= 5) DEFAULT 0,
     sold BOOLEAN NOT NULL,
     saleDate TIMESTAMP,
     FOREIGN KEY (userId) REFERENCES user(id),
     FOREIGN KEY (movieId) REFERENCES movie(id)
 );
+
+
