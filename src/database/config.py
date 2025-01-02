@@ -9,5 +9,6 @@ EXAMPLE_DATA_TABLES = [
     'user',
     'director',
     'genre',
-    'movie'
+    'movie',
+    'userMovie',
 ]
