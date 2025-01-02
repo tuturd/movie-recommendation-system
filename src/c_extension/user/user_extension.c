@@ -26,7 +26,8 @@ CUser get(char* db_directory, char* username) {
 
     if (rc) {
         fprintf(stderr, "Erreur d'ouverture de la base de données : %s\n", sqlite3_errmsg(db));
-        return;
+        CUser empty_user = {0};
+        return empty_user;
     }
 
     // Requête pour obtenir tous les autres utilisateurs
@@ -78,7 +79,8 @@ UserProfile get_user_profile(char* db_directory, int user_id) {
 
     if (rc) {
         fprintf(stderr, "Erreur d'ouverture de la base de données : %s\n", sqlite3_errmsg(db));
-        return;
+        UserProfile empty_profile = {0};
+        return empty_profile;
     }
 
     const char *query_users = 
