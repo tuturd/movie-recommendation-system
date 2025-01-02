@@ -1,13 +1,15 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 import tkinter as tk
+from datetime import datetime
+from tkinter import ttk
+from typing import TYPE_CHECKING
+
 import src.database.utils.movie as MovieUtils
 import src.database.utils.user_movie as UserMovieUtils
-from tkinter import ttk
-from src.utils.logging import get_logger
-from src.classes.movie import Movie, EmptyMovie
+from src.classes.movie import EmptyMovie, Movie
 from src.classes.user_movie import UserMovie
-from datetime import datetime
+from src.utils.logging import get_logger
 
 if TYPE_CHECKING:
     from src.UI.app import App

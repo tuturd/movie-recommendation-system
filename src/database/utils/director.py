@@ -1,5 +1,7 @@
 import sqlite3
+
 import src.database.utils.connection as db
+from src.classes.director import PyDirector
 
 
 class DirectorError(Exception):
@@ -60,3 +62,35 @@ def insert(firstname: str, lastname: str) -> None:
 
     except sqlite3.OperationalError as e:
         raise DirectorError(e, 'Erreur lors de la création du réalisateur')
+
+
+def get_all() -> list[PyDirector]:
+    """
+    Retrieve all directors from the database.
+
+    Returns:
+    --------
+    list[Director]
+        A list of all directors in the database.
+    """
+
+    conn = db.open_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+            SELECT id, firstname, lastname FROM director;
+        """
+    )
+
+    directors = cursor.fetchall()
+    conn.close()
+
+    return [
+        PyDirector(
+            id=director[0],
+            firstname=director[1],
+            lastname=director[2]
+        )
+        for director in directors
+    ]

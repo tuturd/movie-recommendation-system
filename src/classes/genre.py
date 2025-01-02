@@ -41,3 +41,25 @@ class Genre(ctypes.Structure):
         ('cname', ctypes.c_char * 50),
         ('cavg_rating', ctypes.c_float)
     ]
+
+
+class PyGenre:
+    """
+    Represents a movie genre with an ID and a name.
+
+    Attributes:
+    -----------
+    id : int
+        The ID of the genre.
+    name : str
+        The name of the genre.
+
+    Methods:
+    --------
+    __init__(**kwargs)
+        Initializes the PyGenre instance with provided values or defaults.
+    """
+
+    def __init__(self, **kwargs):
+        self.id: int = kwargs.get('id', None)
+        self.name: str = kwargs.get('name', None)

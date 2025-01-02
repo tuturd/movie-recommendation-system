@@ -3,6 +3,20 @@
 #include <string.h>
 #include "user_extension.h"
 
+/**
+ * @brief Récupère un utilisateur de la base de données.
+ * 
+ * Cette fonction prend en entrée un identifiant d'utilisateur et retourne un objet CUser correspondant à cet identifiant.
+ * 
+ * @param db_directory Chemin vers le fichier de la base de données SQLite.
+ * @param user_id ID de l'utilisateur à récupérer.
+ * @return CUser Retourne un objet CUser contenant les informations de l'utilisateur.
+ * 
+ * @example
+ * CUser user = get_user("users.db", 1);
+ * printf("Nom: %s, Email: %s\n", user.name, user.email);
+ */
+
 CUser get(char* db_directory, char* username) {
     sqlite3 *db;
     sqlite3_stmt *stmt;
@@ -39,6 +53,20 @@ CUser get(char* db_directory, char* username) {
 
     return user;
 }
+
+/**
+ * @brief Récupère le profil d'un utilisateur à partir de la base de données.
+ * 
+ * Cette fonction interroge la base de données SQLite pour obtenir les informations de profil complet d'un utilisateur spécifique en utilisant son ID.
+ * 
+ * @param db_directory Chemin vers le fichier de la base de données SQLite.
+ * @param user_id ID de l'utilisateur dont le profil doit être récupéré.
+ * @return UserProfile Retourne une structure UserProfile contenant les informations de l'utilisateur.
+ * 
+ * @example
+ * UserProfile profile = get_user_profile("app.db", 1);
+ * printf("Nom: %s, Âge: %d\n", profile.name, profile.age);
+ */
 
 UserProfile get_user_profile(char* db_directory, int user_id) {
     sqlite3 *db;

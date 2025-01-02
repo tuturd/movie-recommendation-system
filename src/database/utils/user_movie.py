@@ -1,4 +1,5 @@
 import sqlite3
+
 import src.database.utils.connection as db
 from src.classes.user_movie import UserMovie
 
@@ -57,3 +58,36 @@ def insert(user_movie: UserMovie) -> None:
 
     except sqlite3.OperationalError as e:
         raise UserMovieError(e, 'Erreur lors de la récupération du film')
+
+
+def get_len(user_id: int) -> int:
+    """
+    Get the number of UserMovie records for a specific user.
+
+    Parameters:
+    -----------
+    user_id : int
+        The ID of the user.
+
+    Returns:
+    --------
+    int
+        The number of UserMovie records for the specified user.
+    """
+
+    conn = db.open_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        """
+            SELECT COUNT(*)
+            FROM userMovie
+            WHERE userId = ?;
+        """,
+        (user_id,)
+    )
+
+    count = cursor.fetchone()[0]
+    conn.close()
+
+    return count

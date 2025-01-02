@@ -1,11 +1,12 @@
-from src.c_extension.utils.extension import LIB_FILE_EXTENSION
-from src.c_extension.utils.builder_from_app import build as extensions_build
-from src.database.config import DB_PATH
-from src.classes.user import User
-from src.classes.user_profile import UserProfile
-from src.utils.logging import get_logger
 import ctypes
 from pathlib import Path
+
+from src.c_extension.utils.builder_from_app import build as extensions_build
+from src.c_extension.utils.extension import LIB_FILE_EXTENSION
+from src.classes.user import User
+from src.classes.user_profile import UserProfile
+from src.database.config import DB_PATH
+from src.utils.logging import get_logger
 
 logger = get_logger(__name__)
 

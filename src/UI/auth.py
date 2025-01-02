@@ -1,10 +1,10 @@
 import tkinter as tk
+from tkinter import ttk, messagebox
+
 import src.database.utils.auth as auth
-from tkinter import ttk
+from src.UI.interface import AdminInterface
 from src.utils.logging import get_logger
 from src.utils.start import starting_sequence
-from src.UI.interface import AdminInterface
-
 
 logger = get_logger(__name__)
 
@@ -176,7 +176,10 @@ class Auth(tk.Tk):
     def signin_process(self):
         """Handles the event when the user clicks on the 'Créer un compte' button."""
 
-        logger.debug('Signin process not inplemented')
+        messagebox.showerror(
+            'Créer un compte',
+            'Fonctionnalité non implémentée, bouton présent à des fins de démonstration.'
+        )
 
     def close(self):
         """Closes the authentication window and calls the on_destroy callback."""

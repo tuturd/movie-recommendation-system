@@ -1,6 +1,8 @@
-import pandas as pd
-import matplotlib.pyplot as plt
 from datetime import datetime
+
+import matplotlib.pyplot as plt
+import pandas as pd
+
 import src.database.utils.connection as db
 from src.utils.logging import get_logger
 

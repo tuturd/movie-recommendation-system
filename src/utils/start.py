@@ -1,6 +1,7 @@
 from tkinter import messagebox
-from src.database.seed.seed_by_app import seed_database
+
 from src.database.seed.example_data_by_app import import_example_data
+from src.database.seed.seed_by_app import seed_database
 
 
 def starting_sequence():

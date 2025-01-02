@@ -50,3 +50,28 @@ class Director(ctypes.Structure):
         ('clastname', ctypes.c_char * 50),
         ('cavg_rating', ctypes.c_float)
     ]
+
+
+class PyDirector:
+    """
+    A class to represent a Director with attributes for first name, last name, and average rating.
+
+    Attributes:
+    -----------
+    id : int
+        The ID of the director.
+    firstname : str
+        The first name of the director.
+    lastname : str
+        The last name of the director.
+
+    Methods:
+    --------
+    __init__(self, **kwargs)
+        Initializes the PyDirector with the given attributes.
+    """
+
+    def __init__(self, **kwargs):
+        self.id: int = kwargs.get('id', None)
+        self.firstname: str = kwargs.get('firstname', None)
+        self.lastname: str = kwargs.get('lastname', None)

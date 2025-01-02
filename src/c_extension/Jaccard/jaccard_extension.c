@@ -75,8 +75,7 @@ float calculer_jaccard(sqlite3 *db, int user1_id, int user2_id) {
 /**
  * @brief Calcule la similarité de Jaccard pour un utilisateur cible avec tous les autres utilisateurs.
  * 
- * Cette fonction parcourt tous les utilisateurs de la base de données, calcule leur similarité 
- * avec l'utilisateur cible et retourne un tableau dynamique contenant les résultats.
+ * Cette fonction parcourt tous les utilisateurs de la base de données, calcule leur similarité avec l'utilisateur cible et retourne un tableau dynamique contenant les résultats.
  * 
  * @param db_directory Chemin vers le fichier de la base de données SQLite.
  * @param target_user_id ID de l'utilisateur cible.
@@ -141,8 +140,8 @@ ResultatSimilarite* calculer_similarites_pour_utilisateur(char *db_directory, in
 /**
  * @brief Programme principal pour tester le calcul de similarité de Jaccard.
  * 
- * Cette fonction ouvre une connexion à la base de données SQLite,
- * calcule les similarités pour un utilisateur cible et affiche les résultats.
+ * Cette fonction ouvre une connexion à la base de données SQLite, calcule les similarités pour un utilisateur cible et affiche les résultats.
+ * N'est pas nécessaire pour l'utilisation de la fonction de calcul de similarité par l'application. Il s'agit d'un exemple d'utilisation.
  * 
  * @return int Retourne 0 si le programme s'exécute correctement.
  * 

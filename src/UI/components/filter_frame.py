@@ -1,7 +1,8 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 import tkinter as tk
 from tkinter import ttk
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from src.UI.app import App
@@ -109,3 +110,4 @@ class FilterFrame(ttk.LabelFrame):
 
         self.app.close_filter_frame()
         self.app.create_widgets()
+        self.app.refresh_movies()

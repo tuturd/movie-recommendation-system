@@ -1,7 +1,8 @@
 import os
+from pathlib import Path
+
 from src.c_extension.utils.settings import Settings
 from src.utils.logging import get_logger
-from pathlib import Path
 
 logger = get_logger(__name__)
 settings = Settings()

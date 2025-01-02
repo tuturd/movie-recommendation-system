@@ -1,9 +1,11 @@
 from __future__ import annotations
-from typing import TYPE_CHECKING
+
 import tkinter as tk
 from tkinter import ttk
-from src.utils.logging import get_logger
+from typing import TYPE_CHECKING
+
 from src.database.utils.user import get_user_profile
+from src.utils.logging import get_logger
 
 if TYPE_CHECKING:
     from src.UI.app import App

@@ -1,12 +1,24 @@
-from src.c_extension.utils.extension import LIB_FILE_EXTENSION
-from src.database.config import DB_PATH
-from src.classes.jaccard import ResultatSimilarite
 import ctypes
 from pathlib import Path
 
+from src.c_extension.utils.builder_from_app import build as extensions_build
+from src.c_extension.utils.extension import LIB_FILE_EXTENSION
+from src.classes.jaccard import ResultatSimilarite
+from src.database.config import DB_PATH
+from src.utils.logging import get_logger
+
+logger = get_logger(__name__)
+
 # Load the shared library
 libjaccard_path = Path(__file__).parent.parent.parent / f'c_extension/lib/Jaccard.{LIB_FILE_EXTENSION}'
-libjaccard = ctypes.CDLL(str(libjaccard_path))
+
+try:
+    libjaccard = ctypes.CDLL(str(libjaccard_path))
+except OSError as e:
+    logger.warning(f'Error loading the shared library: {e}')
+    extensions_build()
+    libjaccard = ctypes.CDLL(str(libjaccard_path))
+    logger.info('Launching the app...')
 
 # Define the return types and argument types for the functions in the shared library
 libjaccard.calculer_similarites_pour_utilisateur.argtypes = (ctypes.POINTER(ctypes.c_char), ctypes.c_int)
