@@ -110,3 +110,4 @@ class FilterFrame(ttk.LabelFrame):
 
         self.app.close_filter_frame()
         self.app.create_widgets()
+        self.app.refresh_movies()
