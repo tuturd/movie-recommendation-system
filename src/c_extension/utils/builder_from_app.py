@@ -16,28 +16,46 @@ def build() -> None:
     work_dir = Path(__file__).parent.parent
     os.chdir(work_dir)
 
+    build_dir = work_dir / settings.build_dir
+    build_dir.mkdir(parents=True, exist_ok=True)
+
     output_dir = work_dir / settings.lib_dir
     output_dir.mkdir(parents=True, exist_ok=True)
 
     for extension in settings.extensions:
         source_files = [
             f'{extension.extension_name}/{extension.sources_name}.c',
-            f'{extension.extension_name}/{extension.sources_name}.h',
             'sqlite3/sqlite3.c',
-            'sqlite3/sqlite3.h',
+        ]
+
+        o_files = [
+            f'{settings.build_dir}/{extension.sources_name}.o',
+            f'{settings.build_dir}/sqlite3.o',
         ]
 
         if os.name == 'nt':  # Build for Windows
             logger.info(f'Building {extension.extension_name}.dll -> Running...')
             win_output_file = output_dir / f'{extension.extension_name}.dll'
-            win_compile_command = f"gcc -shared -o {win_output_file} {' '.join(source_files)} -fPIC"
+
+            for i, source_file in enumerate(source_files):
+                logger.info(f'Building {o_files[i]} -> Running...')
+                os.system(f'gcc -c -fPIC {source_file} -o {o_files[i]} -I/usr/include')
+                logger.info(f'Building {o_files[i]} -> ok')
+
+            win_compile_command = f"gcc -shared -o {win_output_file} {' '.join(o_files)}"
             os.system(win_compile_command)
             logger.info(f'Building {extension.extension_name}.dll -> OK')
 
         else:  # Build for Linux
             logger.info(f'Building {extension.extension_name}.so -> Running...')
             linux_output_file = output_dir / f'{extension.extension_name}.so'
-            linux_compile_command = f"gcc -shared -o {linux_output_file} {' '.join(source_files)} -I/usr/include -L/usr/lib -lsqlite3 -fPIC"
+
+            for i, source_file in enumerate(source_files):
+                logger.info(f'Building {o_files[i]} -> Running...')
+                os.system(f'gcc -c -fPIC {source_file} -o {o_files[i]} -I/usr/include')
+                logger.info(f'Building {o_files[i]} -> ok')
+
+            linux_compile_command = f"gcc -shared -o {linux_output_file} {' '.join(o_files)} -L/usr/lib -lsqlite3"
             os.system(linux_compile_command)
             logger.info(f'Building {extension.extension_name}.so -> OK')
 

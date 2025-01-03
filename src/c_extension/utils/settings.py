@@ -23,6 +23,7 @@ class Settings:
             for extension in settings.get('extensions', {})
         ]
         self.lib_dir: str = settings.get('lib_dir', '')
+        self.build_dir: str = settings.get('build_dir', '')
         self.dirs_to_delete: list = settings.get('dirs_to_delete', [])
 
     def read_settings(self) -> dict:
