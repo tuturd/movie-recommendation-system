@@ -30,6 +30,16 @@ Effectuez les étapes suivantes:
 1. [Installation](#2-installation)
 2. [SQLite3](#sqlite3)
 
+En résumé:
+```
+git clone https://github.com/tuturd/movie-recommendation-system.git
+cd movie-recommendation-system
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+py main.py
+```
+
 L'initialisation de la base de donnée sera effectuée directement lors de la première execution du logiciel.
 
 Vous souhaitez **ajouter des fonctionnalités** ? Il est nécessaire d'effectuer toutes les étapes mentionnées dans ce README.
